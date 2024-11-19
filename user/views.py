@@ -10,3 +10,6 @@ def dashboard(request):
 
 def change_profile(request):
     return render(request , 'change_profile.html')
+
+def shopping_cart(request):
+    return render(request , 'shopping_cart.html')
