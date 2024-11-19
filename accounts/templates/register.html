@@ -1,0 +1,44 @@
+{% extends 'form_base.html' %}
+
+{% block title %}
+Register
+{% endblock %}
+
+{% block content %}
+    <div  class="d-flex justify-content-center text-white align-items-center vh-100" style="background-color: #151f2c;">
+        <div class="">
+            <!-- Logo Section: Centered -->
+            <div class="mb-4  display-6 auth-logo-container">
+                <b>Shoe Retail Inventory System</b>
+            </div>
+            <!-- Form Section: Centered -->
+            <form action='#' method="POST" class="mb-4 p-5 rounded shadow-sm" style="max-width: 500px; width: 100%; background-color: #182433;">
+                <h5 class="text-center mb-4">Register</h5>
+                <div class="mb-4">
+                    <label for="form-label" class="form-label">Name</label>
+                    <input type="text" class="form-control form-control-sm" id="form-label"  aria-describedby="emailHelp" style=" border-color: #151f2c ; background-color: #151f2c; color: white;">
+                </div>
+                <div class="mb-4">
+                    <label for="form-label" class="form-label">Email address</label>
+                    <input type="email" class="form-control form-control-sm" id="form-label" aria-describedby="emailHelp" style=" border-color: #151f2c ; background-color: #151f2c; color: white;">
+                </div>
+                <div class="mb-4">
+                    <label for="form-label" class="form-label">Password</label>
+                    <input type="password" class="form-control form-control-sm" id="form-label" style=" border-color: #151f2c ; background-color: #151f2c; color: white;">
+                </div>
+                <div class="mb-4">
+                    <label for="password_confirmation" class="form-label">Password</label>
+                    <input type="password" class="form-control form-control-sm" id="password_confirmation" style=" border-color: #151f2c ; background-color: #151f2c; color: white;">
+                </div>
+
+                <div class="form-footer">
+                    <button type="submit" class="btn btn-primary w-100 btn">Register</button>
+                </div>
+            </form>
+            <div class="text-center text-muted">
+                <a href="{% url 'login' %}">Login</a>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
