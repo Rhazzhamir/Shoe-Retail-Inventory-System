@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 
 # from user.models import Product , Category
 
@@ -8,3 +7,6 @@ from django.http import HttpResponse
 
 def dashboard(request):
     return render(request , "user_dashboard.html")
+
+def change_profile(request):
+    return render(request , 'change_profile.html')
