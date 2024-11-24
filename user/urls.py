@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 
+app_name = 'Customer'
 urlpatterns = [
     path('user_dashboard/' , views.dashboard , name='user_dashboard'),
     path('change_profile' , views.change_profile , name='change_profile'),

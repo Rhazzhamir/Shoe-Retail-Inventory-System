@@ -1,44 +1,73 @@
 {% extends 'form_base.html' %}
-
 {% block title %}
 Register
 {% endblock %}
-
 {% block content %}
-    <div  class="d-flex justify-content-center text-white align-items-center vh-100" style="background-color: #151f2c;">
-        <div class="">
-            <!-- Logo Section: Centered -->
-            <div class="mb-4  display-6 auth-logo-container">
+    <div class="d-flex justify-content-center text-white align-items-center vh-100" style="background-color: #151f2c;">
+        <div>
+            <div class="mb-4 display-6 auth-logo-container">
                 <b>Shoe Retail Inventory System</b>
             </div>
-            <!-- Form Section: Centered -->
-            <form action='#' method="POST" class="mb-4 p-5 rounded shadow-sm" style="max-width: 500px; width: 100%; background-color: #182433;">
+            <form method="POST" action="{% url 'accounts:register' %}" class="mb-4 p-5 rounded shadow-sm" style="max-width: 500px; width: 100%; background-color: #182433;">
+                {% csrf_token %}
                 <h5 class="text-center mb-4">Register</h5>
+                
                 <div class="mb-4">
-                    <label for="form-label" class="form-label">Name</label>
-                    <input type="text" class="form-control form-control-sm" id="form-label"  aria-describedby="emailHelp" style=" border-color: #151f2c ; background-color: #151f2c; color: white;">
+                    <label for="id_username" class="form-label">Name</label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        <div class="text-danger">
+                            {{ form.username.errors|join:", " }}
+                        </div>
+                    {% endif %}
                 </div>
+                
                 <div class="mb-4">
-                    <label for="form-label" class="form-label">Email address</label>
-                    <input type="email" class="form-control form-control-sm" id="form-label" aria-describedby="emailHelp" style=" border-color: #151f2c ; background-color: #151f2c; color: white;">
+                    <label for="id_email" class="form-label">Email Address</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <div class="text-danger">
+                            {{ form.email.errors|join:", " }}
+                        </div>
+                    {% endif %}
                 </div>
+                
                 <div class="mb-4">
-                    <label for="form-label" class="form-label">Password</label>
-                    <input type="password" class="form-control form-control-sm" id="form-label" style=" border-color: #151f2c ; background-color: #151f2c; color: white;">
+                    <label for="id_password1" class="form-label">Password</label>
+                    {{ form.password1 }}
+                    {% if form.password1.errors %}
+                        <div class="text-danger">
+                            {{ form.password1.errors|join:", " }}
+                        </div>
+                    {% endif %}
                 </div>
+                
                 <div class="mb-4">
-                    <label for="password_confirmation" class="form-label">Password</label>
-                    <input type="password" class="form-control form-control-sm" id="password_confirmation" style=" border-color: #151f2c ; background-color: #151f2c; color: white;">
+                    <label for="id_password2" class="form-label">Confirm Password</label>
+                    {{ form.password2 }}
+                    {% if form.password2.errors %}
+                        <div class="text-danger">
+                            {{ form.password2.errors|join:", " }}
+                        </div>
+                    {% endif %}
                 </div>
-
+                
                 <div class="form-footer">
-                    <button type="submit" class="btn btn-primary w-100 btn">Register</button>
+                    <button type="submit" class="btn btn-success btn-md w-100">Register</button>
                 </div>
             </form>
             <div class="text-center text-muted">
-                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'accounts:login' %}" class="text-decoration-none">Login</a>
             </div>
         </div>
     </div>
-    
 {% endblock %}
+
+
+
+<!-- 
+
+<input type="text" class="form-control form-control-sm" id="form-label"  aria-describedby="emailHelp" style=" border-color: #151f2c ; background-color: #151f2c; color: white;">
+<input type="email" class="form-control form-control-sm" id="form-label" aria-describedby="emailHelp" style=" border-color: #151f2c ; background-color: #151f2c; color: white;">
+<input type="password" class="form-control form-control-sm" id="form-label" style=" border-color: #151f2c ; background-color: #151f2c; color: white;">
+<input type="password" class="form-control form-control-sm" id="password_confirmation" style=" border-color: #151f2c ; background-color: #151f2c; color: white;"> -->
