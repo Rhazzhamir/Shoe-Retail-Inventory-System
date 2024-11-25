@@ -7,6 +7,8 @@ from . import views
 app_name = 'Customer'
 urlpatterns = [
     path('user_dashboard/' , views.dashboard , name='user_dashboard'),
-    path('change_profile' , views.change_profile , name='change_profile'),
+    # path('change_profile' , views.change_profile , name='change_profile'),
     path('shopping_cart/' , views.shopping_cart , name='shopping_cart'),
+    path('sample/' , views.sample_view , name='sample'),
+
 ]

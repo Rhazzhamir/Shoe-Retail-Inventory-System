@@ -37,6 +37,11 @@ Login
                         <a class="text-decoration-none" href="#">Forgot Your Password?</a>
                     </div>
                 </div>
+
+                {% if request.GET.next %}
+                    <input type="hidden" name="next" value="{{ request.GET.next}}" >
+                {% endif %}
+                
                 <div class="form-footer">
                     <button type="submit" class="btn btn-success w-100 btn">Submit</button>
                 </div>
