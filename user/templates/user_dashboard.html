@@ -5,34 +5,21 @@ Dashboard
 {% endblock%}
 
 {% block slide %}
+    {% load static %}
 
-<div id="home" class="position-relative overflow-hidden p-md-5 m-md-3 text-center">
-    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center " style="background-color: #263b53;">
-        <div class="col-md-6  mx-auto my-5">
-            <section id="Skill" class="wraper_skill">
-                <div class="scroller" data-speed="fast">
-                    <ul class="tag-list scroller__inner">
-                        <li><img src="{% static 'image/scroller/1.jpg'%}" alt=""></li>
-                        <li><img src="{% static 'image/scroller/2.jpg'%}" alt=""></li>
-                        <li><img src="{% static 'image/scroller/3.jpg'%}" alt=""></li>
-                        <li><img src="{% static 'image/scroller/4.jpg'%}" alt=""></li>
-                        <li><img src="{% static 'image/scroller/5.jpg'%}" alt=""></li>
-                    </ul>
-                </div>
-                <!-- <div class="scroller" data-direction="right" data-speed="slow">
-                    <button class="addSkill">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125" stroke="#fffffff" stroke-width="2"></path>
-                        <path d="M17 15V18M17 21V18M17 18H14M17 18H20" stroke="#fffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                        </svg>
-                        ADD SKILL
-                    </button>
-                    <input type="file" id="fileInput" style="display: none;">
-                </div> -->
-            </section>
-        </div>
+<!-- <div id="home" class="position-relative overflow-hidden p-md-3 m-md-2 text-center"> -->
+<div id="Skill" class="wraper_skill position-relative overflow-hidden text-center " >
+    <div class="scroller " data-speed="fast">
+        <ul class="tag-list scroller__inner">
+            <li><img src="{% static 'image/scroller/1.jpg'%}" alt=""></li>
+            <li><img src="{% static 'image/scroller/2.jpg'%}" alt=""></li>
+            <li><img src="{% static 'image/scroller/3.jpg'%}" alt=""></li>
+            <li><img src="{% static 'image/scroller/4.jpg'%}" alt=""></li>
+            <li><img src="{% static 'image/scroller/5.jpg'%}" alt=""></li>
+        </ul>
     </div>
 </div>
+<!-- </div> -->
 
 
 <!-- <div id="home" class="position-relative overflow-hidden p-md-5 m-md-3 text-center">

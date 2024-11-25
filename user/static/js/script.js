@@ -28,4 +28,3 @@ function scrollEffect() {
   home.style.background = 160 - window.scrollY / 12 + "%";
 }
 
-console.log('hello world')
