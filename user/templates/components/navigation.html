@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-dark sticky-top" data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg bg-dark sticky-top p-2" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="#home">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-boxes" viewBox="0 0 16 16">
@@ -11,7 +11,7 @@
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav nav-underline me-auto">
                     <li class="nav-item">
-                            <a class="nav-link " href="#Skill">Home</a>
+                            <a class="nav-link " href="#home">Home</a>
                     </li>
                     <li class="nav-item dropend">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Category</a>
@@ -19,13 +19,12 @@
                             <a class="dropdown-item" href="#shop">Type of shoes</a>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#shop">Shop</a>
-                    </li>
                 </ul>   
                 <div class="d-flex justify-content-center align-items-center">
                     <div class="mx-5 ">
                         <ul  class=" gap-5 list-unstyled d-flex justify-content-center align-items-center navbar-nav nav-underline me-auto">
+                            
+                            <!-- cart -->
                             <li class="cart ">
                                 <a class="align-items-center" href="#" >
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
@@ -34,6 +33,11 @@
                                 </a>
                             </li>
 
+                            <!-- Search -->
+                            <form class="d-flex">
+                                <input class="form-control me-sm-2 " type="search" placeholder="Search">
+                                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                            </form>
                             <!-- Dropdown -->
                             <li class="nav-item dropstart">
                                 <a class="nav-link dropdown-toggle " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">

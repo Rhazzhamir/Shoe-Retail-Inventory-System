@@ -8,6 +8,7 @@ Register
             <div class="mb-4 display-6 auth-logo-container">
                 <b>Shoe Retail Inventory System</b>
             </div>
+            <!-- form -->
             <form method="POST" action="{% url 'accounts:register' %}" class="mb-4 p-5 rounded shadow-sm" style="max-width: 500px; width: 100%; background-color: #182433;">
                 {% csrf_token %}
                 <h5 class="text-center mb-4">Register</h5>
