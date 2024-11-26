@@ -1,6 +1,8 @@
 {% extends 'form_base.html' %}
 
-
+{% block title%}
+Profile
+{% endblock %}
 {% block content %}
     <div class="container light-style flex-grow-1  p-5 container-p-y">
         <div class="card overflow-hidden m-5 ">
@@ -54,10 +56,11 @@
                                 <div class="d-flex align-items-center gap-3">
                                     <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt
                                     class="d-block ui-w-80">
+                                    Font
                                     <h2><b>{{ user.username}}</b></h2>
                                 </div>
                                 <div class="media-body ml-4 mt-2">
-                                    <label class="btn btn-outline-primary">
+                                    <label class="btn btn-primary">
                                         Upload new photo
                                         <input type="file" class="account-settings-fileinput">
                                     </label> &nbsp;
@@ -68,24 +71,24 @@
                                 <form action="{% url 'accounts:User-Profile'%}" method="POST">
                                     {% csrf_token %}
                                     <div class="form-group">
-                                        <label class="form-label">Username</label>
-                                        <input type="text" class="form-control mb-1  border-primary" name="username" value="{{user.username}}">
+                                        <label class="form-label"><b>Username </b></label>
+                                        <input type="text" class="form-control mb-3  border-primary" name="username" value="{{user.username}}">
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Email</label>
-                                        <input type="email" class="form-control mb-1 border-primary" name="email" value="{{user.email}}">
+                                        <label class="form-label"><b>Email </b></label>
+                                        <input type="email" class="form-control mb-3 border-primary" name="email" value="{{user.email}}">
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">First Name</label>
-                                        <input type="text" class="form-control mb-1 border-primary" name="first_name" value="{{user.first_name}}">
+                                        <label class="form-label"><b>First Name </b></label>
+                                        <input type="text" class="form-control mb-3 border-primary" name="first_name" value="{{user.first_name}}">
                                         
                                     </div>
                                     <div class="form-group mb-3">
-                                        <label class="form-label">Last Name</label>
-                                        <input type="text" class="form-control mb-1 border-primary" name="last_name" value="{{user.last_name}}">
+                                        <label class="form-label"><b>Last Name </b></label>
+                                        <input type="text" class="form-control mb-3 border-primary" name="last_name" value="{{user.last_name}}">
                                     </div>
                                     <div class="d-flex justify-content-end text-right mt-3 ">
-                                        <button type="submit" class="btn  btn-outline-success">Save changes</button>&nbsp;
+                                        <button type="submit" class="btn  btn-success"><span>Save changes</span></button>&nbsp;
                                     </div>
                                 </form>
                             </div>

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
 # Create your views here.
-def dashboard(request):
+def seller_dashboard_view(request):
     return render(request , 'seller_dashboard.html')
+

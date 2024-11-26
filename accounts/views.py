@@ -58,7 +58,4 @@ def user_profile(request):
             return redirect('accounts:User-Profile')
     else:
         form = UserChangeForm(instance=request.user)
-
     return render(request, 'profile.html', {'form': form})
-
-

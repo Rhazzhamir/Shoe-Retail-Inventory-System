@@ -1,9 +1,11 @@
 
 
-from django.contrib import admin
 from django.urls import path
 from . import views
 
+app_name = 'seller'
+
 urlpatterns = [
-    path('seller_dashboard/', views.dashboard, name='seller_dashboard'),
+    path('seller_dashboard/', views.seller_dashboard_view, name='seller_dashboard'),
+    
 ]
