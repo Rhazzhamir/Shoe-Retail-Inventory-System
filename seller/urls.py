@@ -9,3 +9,4 @@ urlpatterns = [
     path('seller_dashboard/', views.seller_dashboard_view, name='seller_dashboard'),
     
 ]
+
