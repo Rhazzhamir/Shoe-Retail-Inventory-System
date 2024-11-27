@@ -1,6 +1,13 @@
 body {
     background: #151f2c
 }
+
+.noto-serif-ahom-regular {
+    font-family: "Noto Serif Ahom", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
 .ui-w-80 {
     width : 80px !important;
     height: auto;

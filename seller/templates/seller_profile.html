@@ -1,25 +1,28 @@
-{% extends 'form_base.html' %}
+{% extends 'seller_base.html' %}
 
 {% block title%}
-Profile
+    Profile
 {% endblock %}
 
 {% block alert%}
     {% include 'components/alert.html'%}
 {% endblock %}
 {% block content %}
-    <div class="container light-style flex-grow-1 mt-3 container-p-y">
+    <div class="container light-style flex-grow-1 mt-5 container-p-y">
         <div class="d-flex justify-content-between">
             <div class="d-flex align-items-center py-3 gap-4">
-                <a href="{% url 'Customer:user_dashboard'%}">
+                <a href="{% url 'seller:seller_dashboard'%}">
                     <svg class="" xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"/>
                         <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708z"/>
                     </svg>
                 </a>
-                <h4 class="font-weight-bold m-0 text-light">
+                <h4 class="font-weight-bold m-0 ">
                     Account settings
                 </h4>
+            </div>
+            <div class="d-flex align-items-center ">
+                <button type="button" class="btn btn-success">Save changes</button>&nbsp;
             </div>
         </div>
         <div class="card overflow-hidden">
@@ -40,18 +43,16 @@ Profile
                                 href="#account-notifications">Notifications</a>
                         </div>
                         <div class="mt-5 mb-3">
-                            {% include 'logout.html'%} 
+                            <a class="list-group-item list-group-item-action " data-toggle="list"
+                            href="#account-notifications">{% include 'logout.html'%}</a> 
                         </div>
                 </div>
                 <div class="col-md-9">
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="account-general">
                             <div class="card-body media align-items-center">
-                                <div class="d-flex align-items-center gap-3">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt
+                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt
                                     class="d-block ui-w-80 mb-2">
-                                    <h2 class="noto-serif-ahom-regular mt-4"><b>{{ user.username}} {{user.last_name}}</b></h2>
-                                </div>
                                 <div class="media-body ml-4">
                                     <label class="btn btn-outline-primary">
                                         Upload new photo
@@ -62,34 +63,40 @@ Profile
                             </div>
                             <hr class="border-light m-0">
                             <div class="card-body">
-                                <form action="{% url 'accounts:User-Profile'%}" method="POST">
-                                    {% csrf_token %}
-                                    <div class="form-group">
-                                        <label class="form-label"><b>Username </b></label>
-                                        <input type="text" class="form-control mb-3  border-primary" name="username" value="{{user.username}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label"><b>Email </b></label>
-                                        <input type="email" class="form-control mb-3 border-primary" name="email" value="{{user.email}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label"><b>First Name </b></label>
-                                        <input type="text" class="form-control mb-3 border-primary" name="first_name" value="{{user.first_name}}">
-                                        
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label class="form-label"><b>Last Name </b></label>
-                                        <input type="text" class="form-control mb-3 border-primary" name="last_name" value="{{user.last_name}}">
-                                    </div>
-                                    <div class="d-flex justify-content-end text-right mt-3 ">
-                                        <button type="submit" class="btn  btn-success"><span>Save changes</span></button>&nbsp;
-                                    </div>
-                                </form>
+                                <div class="form-group">
+                                    <label class="form-label">Username</label>
+                                    <input type="text" class="form-control mb-1" value="nmaxwell">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" class="form-control" value="Nelle Maxwell">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">E-mail</label>
+                                    <input type="text" class="form-control mb-1" value="nmaxwell@mail.com">
+                                    
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Company</label>
+                                    <input type="text" class="form-control" value="Company Ltd.">
+                                </div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="account-change-password">
-                            {% include 'change_password.html'%}
-                        </div>
+                            <div class="card-body pb-2">
+                                <div class="form-group">
+                                    <label class="form-label">Current password</label>
+                                    <input type="password" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">New password</label>
+                                    <input type="password" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Repeat new password</label>
+                                    <input type="password" class="form-control">
+                                </div>
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="account-info">
                             <div class="card-body pb-2">
@@ -252,5 +259,6 @@ Profile
             </div>
         </div>
     </div>
-{% endblock %}
 
+
+{% endblock %}

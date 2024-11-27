@@ -16,6 +16,11 @@
         #2e2b2b 70%
     ); */
 }
+.noto-serif-ahom-regular {
+    font-family: "Noto Serif Ahom", serif;
+    font-weight: 400;
+    font-style: normal;
+}
 .scroller {
     max-width: 1000px;
     }

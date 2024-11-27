@@ -10,7 +10,7 @@
         </button>
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav nav-underline me-auto">
-                    <li class="nav-item">
+                    <li class="nav-item ">
                             <a class="nav-link " href="#home">Home</a>
                     </li>
                     <li class="nav-item dropend">
@@ -47,6 +47,11 @@
                                     </svg>
                                 </a>
                                 <div style="background-color: #182433" class="dropdown-menu">
+                                    <div class="d-flex justify-content-center align-items-center gap-1 mb-3">
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt
+                                        class="w-25">
+                                        <h5 class="m-0">{{user.username}}</h5>
+                                    </div>
                                     <a class="dropdown-item d-flex gap-4 " href="{% url 'accounts:profile'%}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
                                             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>

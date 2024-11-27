@@ -11,6 +11,7 @@ urlpatterns = [
 
     # profile
     path('profile/' , views.profile_view , name='profile'),
-    path('User-Profile/' , views.user_profile , name='User-Profile')
+    path('User-Profile/' , views.user_profile , name='User-Profile'),
+    path('change-password/', views.change_password_view, name='change_password'),
 #     path('reset/' , views.reset , name='reset'),
 ]
