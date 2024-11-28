@@ -4,9 +4,11 @@ body {
 
 .noto-serif-ahom-regular {
     font-family: "Noto Serif Ahom", serif;
-    font-weight: 400;
+    font-weight: 600;
     font-style: normal;
 }
+
+
 
 .ui-w-80 {
     width : 80px !important;

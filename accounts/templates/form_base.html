@@ -14,9 +14,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Ahom&family=Sofia&display=swap" rel="stylesheet">
-
-    <title>{% block title%} {% endblock %}</title>
-</head>
 <body >
     <main>
         <!-- form -->
@@ -24,6 +21,8 @@
             {% include 'components/alert.html'%}
         {% endblock %}
 
+        {% block nav%}
+        {% endblock %}
         {% block content %}
         {% endblock %}
     </main>

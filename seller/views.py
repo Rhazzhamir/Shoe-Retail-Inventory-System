@@ -6,3 +6,6 @@ def seller_dashboard_view(request):
 
 def profile_view(request):
     return render(request , 'seller_profile.html')
+
+
+

@@ -58,28 +58,33 @@
                                         Upload new photo
                                         <input type="file" class="account-settings-fileinput">
                                     </label> &nbsp;
-
                                 </div>
                             </div>
                             <hr class="border-light m-0">
                             <div class="card-body">
-                                <div class="form-group">
-                                    <label class="form-label">Username</label>
-                                    <input type="text" class="form-control mb-1" value="nmaxwell">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Name</label>
-                                    <input type="text" class="form-control" value="Nelle Maxwell">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">E-mail</label>
-                                    <input type="text" class="form-control mb-1" value="nmaxwell@mail.com">
-                                    
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Company</label>
-                                    <input type="text" class="form-control" value="Company Ltd.">
-                                </div>
+                                <form action="{% url 'accounts:User-Profile'%}" method="POST">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label class="form-label"><b>Username </b></label>
+                                        <input type="text" class="form-control mb-3  border-primary" name="username" value="{{user.username}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label"><b>Email </b></label>
+                                        <input type="email" class="form-control mb-3 border-primary" name="email" value="{{user.email}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label"><b>First Name </b></label>
+                                        <input type="text" class="form-control mb-3 border-primary" name="first_name" value="{{user.first_name}}">
+                                        
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label class="form-label"><b>Last Name </b></label>
+                                        <input type="text" class="form-control mb-3 border-primary" name="last_name" value="{{user.last_name}}">
+                                    </div>
+                                    <div class="d-flex justify-content-end text-right mt-3 ">
+                                        <button type="submit" class="btn  btn-success"><span>Save changes</span></button>&nbsp;
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="account-change-password">

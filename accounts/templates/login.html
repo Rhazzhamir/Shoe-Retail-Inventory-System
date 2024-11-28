@@ -4,18 +4,22 @@
 Login
 {% endblock %}
 
+{% block nav%}
+    
+{% endblock %}
 {% block content %}
-    <div  class="d-flex justify-content-center text-white align-items-center vh-100" style="background-color: #151f2c;">
+    {% include 'components/logo.html'%} 
+    <div  class="d-flex justify-content-center text-white align-items-center mt-5 vh-50" style="background-color: #151f2c;">
         <div>
             <!-- Logo Section: Centered -->
             <div class="mb-4  display-6 auth-logo-container">
-                <b>Shoe Retail Inventory System</b>
+                <!-- <b>Shoe Retail Inventory System</b> -->
             </div>
             
             <!-- Form Section: Centered -->
             <form action="{% url 'accounts:login' %}" method="POST" class="mb-4 p-5 rounded shadow-sm" style="max-width: 500px; width: 100%; background-color: #182433;">
                 {% csrf_token %}
-                <h4 class="text-center mb-4">Login</h4>
+                <h4 class="text-center mb-4 noto-serif-ahom-regular">Login</h4>
                 <div class="mb-4">
                     <label for="form-label" class="form-label">Username</label>
                     {{ form.username }}
@@ -29,7 +33,7 @@ Login
                     <label for="form-label" class="form-label">Password</label>
                     {{ form.password }}
                 </div>
-                <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="d-flex justify-content-between align-items-center gap-5  mb-3">
                     <label for="" class="form-check mb-0">
                         <input class="form-check-input" name="remember" type="checkbox">
                         <span class="form-check-label">Remember me</span>
