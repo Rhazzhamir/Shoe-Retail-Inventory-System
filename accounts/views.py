@@ -28,9 +28,14 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request , user)
+
             messages.success(request , 'Login Successful')
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
+            if user.is_superuser:
+                return redirect('../../admin')
+            if user.is_staff:
+                return redirect('seller:seller_dashboard')
             else:
                 return redirect('Customer:user_dashboard')
     else:
@@ -55,16 +60,13 @@ def profile_view(request):
 @login_required(login_url='accounts:login')
 def user_profile(request):
     if request.method == 'POST':
-        # Get the current user
         user = request.user
         
-        # Update user fields with the submitted data
         user.username = request.POST.get('username')
         user.email = request.POST.get('email')
         user.first_name = request.POST.get('first_name')
         user.last_name = request.POST.get('last_name')
         
-        # Save the updated user instance
         try:
             user.save()
             messages.success(request, 'Profile updated successfully!')
@@ -72,7 +74,6 @@ def user_profile(request):
         except Exception as e:
             messages.error(request, f'Error updating profile: {e}')
     else:
-        # If the request is GET, just render the profile page
         pass
     return render(request, 'profile.html', {'user': request.user})
 
@@ -100,3 +101,27 @@ def change_password(request):
             messages.error(request, 'Current password is incorrect.')
 
     return render(request, 'profile.html')
+
+
+
+
+
+
+# Seller views
+
+@login_required(login_url='accounts:login')
+def seller_profile(request):
+    if request.method == 'POST':
+        user = request.user
+        user.username = request.POST.get('username')
+        user.email = request.POST.get('email')
+        user.first_name = request.POST.get('first_name')
+        user.last_name = request.POST.get('last_name')
+
+        try:
+            user.save()
+            messages.success(request, 'Seller profile updated successfully!')
+            return redirect('accounts:Seller-Profile')  
+        except Exception as e:
+            messages.error(request, f'Error updating seller profile: {e}')
+    return render(request, 'seller_profile.html', {'user': request.user})
