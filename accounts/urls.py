@@ -12,8 +12,10 @@ urlpatterns = [
     # customer profile
     path('profile/' , views.profile_view , name='profile'),
     path('User-Profile/' , views.user_profile , name='User-Profile'),
-    path('change-password/', views.change_password, name='change_password'),
+    path('change-password/', views.customer_change_password, name='customer_change_password'),
 
     # Seller profile
     path('Seller-profile/' , views.seller_profile , name='Seller-Profile'),
+    path('change-password/', views.seller_change_password, name='seller_change_password'),
+
 ]

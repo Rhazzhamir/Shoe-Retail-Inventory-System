@@ -52,7 +52,7 @@
                                     <div class="d-flex align-items-center gap-3">
                                         <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt
                                         class="d-block ui-w-80 mb-2">
-                                        <h2 class="noto-serif-ahom-regular mt-4"><b>{{ user.username}} {{user.last_name}}</b></h2>
+                                        <h2 class="noto-serif-ahom-regular mt-4"><b>{{ user.    }} {{user.last_name}}</b></h2>
                                     </div>
                                     <div class="media-body ml-4">
                                         <label class="btn btn-outline-primary">
@@ -90,7 +90,7 @@
                             </div>
                             <div class="tab-pane fade" id="account-change-password">
                                 <div class="card-body pb-2">
-                                    <form action="{% url 'accounts:change_password' %}" method="POST"> 
+                                    <form action="{% url 'accounts:customer_change_password' %}" method="POST"> 
                                         {% csrf_token %}
                                         <div class="form-group">
                                             <label class="form-label">Current password</label>

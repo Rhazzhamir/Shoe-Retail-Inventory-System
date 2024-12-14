@@ -17,9 +17,9 @@
                     <h1 class="noto-serif-ahom-regular text-light mt-2">STRIDENEST</h1>
                 </div>
             </div>
-            <ul class="sidebar-nav">
+            <ul class="sidebar-nav" id="myTab" role="tablist">
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="#category_page" class="sidebar-link" data-toggle="tab">
                         <svg class="me-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tags" viewBox="0 0 16 16">
                             <path d="M3 2v4.586l7 7L14.586 9l-7-7zM2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586z"/>
                             <path d="M5.5 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1z"/>
@@ -28,7 +28,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="#product_page" class="sidebar-link" data-toggle="tab">
                         <svg class="me-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-seam" viewBox="0 0 16 16">
                             <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2zm3.564 1.426L5.596 5 8 5.961 14.154 3.5zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464z"/>
                         </svg>
@@ -36,7 +36,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="#about_page" class="sidebar-link" data-toggle="tab">
                         <svg  class="me-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-lg" viewBox="0 0 16 16">
                             <path d="m9.708 6.075-3.024.379-.108.502.595.108c.387.093.464.232.38.619l-.975 4.577c-.255 1.183.14 1.74 1.067 1.74.72 0 1.554-.332 1.933-.789l.116-.549c-.263.232-.65.325-.905.325-.363 0-.494-.255-.402-.704zm.091-2.755a1.32 1.32 0 1 1-2.64 0 1.32 1.32 0 0 1 2.64 0"/>
                         </svg>
@@ -44,13 +44,14 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="#help_page" class="sidebar-link" data-toggle="tab">
                         <svg class="me-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-lg" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M4.475 5.458c-.284 0-.514-.237-.47-.517C4.28 3.24 5.576 2 7.825 2c2.25 0 3.767 1.36 3.767 3.215 0 1.344-.665 2.288-1.79 2.973-1.1.659-1.414 1.118-1.414 2.01v.03a.5.5 0 0 1-.5.5h-.77a.5.5 0 0 1-.5-.495l-.003-.2c-.043-1.221.477-2.001 1.645-2.712 1.03-.632 1.397-1.135 1.397-2.028 0-.979-.758-1.698-1.926-1.698-1.009 0-1.71.529-1.938 1.402-.066.254-.278.461-.54.461h-.777ZM7.496 14c.622 0 1.095-.474 1.095-1.09 0-.618-.473-1.092-1.095-1.092-.606 0-1.087.474-1.087 1.091S6.89 14 7.496 14"/>
                         </svg>
                         <span>Help</span>
                     </a>
                 </li>
+                
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                         data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
@@ -93,6 +94,7 @@
                     <a href="#" class="sidebar-link">
                         <i class="lni lni-popup"></i>
                         <span>Notification
+                            <!-- sticky notes -->
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                 99+
                                 <span class="visually-hidden">unread messages</span>
@@ -119,10 +121,30 @@
         </aside>
         <div class="main">
             <div class="text-center">
-                {% block nav %}
+                <div>
+                    {% block nav %}
                     {% include 'components/nav.html'%}
-                {% endblock %}
+                    {% endblock %}
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="home_page" style="background-color: red; height: 92vh;">
+                        Home include
+                    </div>
+                    <div class="tab-pane fade show  " id="category_page" style="background-color: rgba(9, 134, 244, 0.488); height: 92vh;">
+                        category
+                    </div>
+                    <div class="tab-pane fade show " id="product_page" style="background-color: rgb(255, 208, 0); height: 92vh;">
+                        product
+                    </div>
+                    <div class="tab-pane fade show " id="about_page" style="background-color: rgb(10, 255, 251); height: 92vh;">
+                        About
+                    </div>
+                    <div class="tab-pane fade show " id="help_page" style="background-color: rgb(0, 255, 30); height: 92vh;">
+                        help
+                    </div>
+                    
+                </div>
             </div>
         </div>
     </div>
-{% endblock %}
+    {% endblock %}

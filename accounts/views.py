@@ -80,7 +80,7 @@ def user_profile(request):
 
 # Change password
 @login_required(login_url='accounts:login')
-def change_password(request):
+def customer_change_password(request):
     if request.method == 'POST':
         current_password = request.POST['current_password']
         new_password = request.POST['new_password']
@@ -100,7 +100,7 @@ def change_password(request):
         else:
             messages.error(request, 'Current password is incorrect.')
 
-    return render(request, 'profile.html')
+    return render(request, 'profile.html' , {'user': request.user})
 
 
 
@@ -124,4 +124,29 @@ def seller_profile(request):
             return redirect('accounts:Seller-Profile')  
         except Exception as e:
             messages.error(request, f'Error updating seller profile: {e}')
+    return render(request, 'seller_profile.html', {'user': request.user})
+
+
+
+@login_required(login_url='accounts:login')
+def seller_change_password(request):
+    if request.method == 'POST':
+        current_password = request.POST['current_password']
+        new_password = request.POST['new_password']
+        confirm_password = request.POST['confirm_password']
+
+        user = authenticate(username=request.user.username, password=current_password)
+
+        if user is not None:
+            if new_password == confirm_password:
+                user.set_password(new_password)
+                user.save()
+                update_session_auth_hash(request, user)  # Keep the user logged in
+                messages.success(request, 'Your password has been changed successfully.')
+                return redirect('seller:profile_view') 
+            else:
+                messages.error(request, 'New passwords do not match.')
+        else:
+            messages.error(request, 'Current password is incorrect.')
+
     return render(request, 'seller_profile.html', {'user': request.user})
