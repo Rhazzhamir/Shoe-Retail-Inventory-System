@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 def dashboard(request):
     return render(request , "user_dashboard.html")
 
+@login_required(login_url='accounts:login')
 def shopping_cart(request):
     return render(request , 'shopping_cart.html')
 
