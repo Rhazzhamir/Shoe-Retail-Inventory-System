@@ -9,3 +9,4 @@ function handleChatSubmit(event) {
     console.log("User message:", input.value);
     input.value = ""; // Clear input field
 }
+

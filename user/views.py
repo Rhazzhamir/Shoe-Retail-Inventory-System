@@ -13,3 +13,5 @@ def dashboard(request):
 def shopping_cart(request):
     return render(request , 'shopping_cart.html')
 
+def about(request):
+    return render( request, 'about.html')

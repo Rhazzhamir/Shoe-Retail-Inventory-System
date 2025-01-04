@@ -17,14 +17,17 @@
         <div class="d-flex align-items-center mt-3">  
             <h1 class="noto-serif-ahom-regular m-0 flex-grow-1 text-light ">Category</h1>
             <div class="d-flex">
-                <button class="download btn btn-primary btn-sm rounded-2 me-2">
+                <button class="download btn btn-primary btn-sm rounded-2 me-3">
                     <svg class="svgIcon" viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg">
                         <path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"></path>
                     </svg>
                     <span class="icon2"></span>
                     <span class="tooltip">Download</span>
                 </button>
-                <button class="Add_category btn btn-primary btn-sm rounded-2">New Product</button>
+                <button type="button" class="btn btn-primary Add_category btn btn-primary btn-sm rounded-2 me-4" data-bs-toggle="modal" data-bs-target="#categoryModal">
+                    New Category
+                </button>
+                {% include 'components/Modal/Category_Modal/category_modal.html'%}
             </div>
         </div>
     </div>

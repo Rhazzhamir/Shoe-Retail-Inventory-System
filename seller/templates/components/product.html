@@ -24,7 +24,11 @@
                     <span class="icon2"></span>
                     <span class="tooltip">Download</span>
                 </button>
-                <button class="Add_category btn btn-primary btn-sm rounded-2">New Product</button>
+                <button type="button" class="btn btn-primary Add_product_btn btn btn-primary btn-sm rounded-2 me-4" data-bs-toggle="modal" data-bs-target="#productModal">
+                    New Product
+                </button>
+                {% include 'components/Modal/Product_Modal/product_modal.html'%}
+
             </div>
         </div>
     </div>
