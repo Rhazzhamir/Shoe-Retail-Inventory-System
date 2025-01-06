@@ -1,17 +1,15 @@
 from django.db import models
+from django.utils import timezone
 
-# Create your models here.
-# class category(models.Model):
-#     categoryName = models.charfield(max_length = 255)
+class Category(models.Model):
+    category_name = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(null=True, blank=True)  # Make it nullable
 
-#     def __str__(self):
-#         return self.categoryName
-    
-# class product(models.Model):
-#     category = models.ForeignKey(category, related_name = 'seller' , on_delete=models.CASCADE)
-#     Product_Name = models.CharField(max_length=255)
-#     Price = models.IntegerField()
-#     created_at = models.DateTimeField(auto_now_add = True)
-    
-#     def __str__(self):
-#         return self.Product_Name
+    def save(self, *args, **kwargs):
+        if self.pk:  # If the category already exists, update the updated_at field
+            self.updated_at = timezone.now()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.category_name
