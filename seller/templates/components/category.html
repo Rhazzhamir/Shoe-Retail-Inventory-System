@@ -50,7 +50,7 @@
     <tbody>
         {% for category in categories %}
         <tr>
-            <th class="text-light" scope="row">{{ forloop.counter }}</th>
+            <th class="text-light" scope="row">{{ category.id }}</th>
             <td class="text-light">{{ category.category_name }}</td>
             <td class="text-light">{{ category.created_at }}</td>
             <td class="text-light">

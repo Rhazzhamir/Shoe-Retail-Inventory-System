@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Category
-from .form import CategoryForm
+from .models import Category , Product
+from .form import CategoryForm , ProductForm
 
 @login_required(login_url='accounts:login')
 def seller_dashboard_view(request):
     category_id = request.POST.get('category_id')  # Get category ID if available
-    
+    products = Product.objects.filter(seller=request.user)  
     if request.method == 'POST':
         if category_id:  # If category_id is present, we are updating
             category = get_object_or_404(Category, id=category_id)
@@ -29,6 +29,7 @@ def seller_dashboard_view(request):
     context = {
         'form': form,
         'categories': categories,
+        'products': products,
     }
     return render(request, 'seller_dashboard.html', context)
 
@@ -38,6 +39,28 @@ def delete_category_view(request, category_id):
     category.delete()
     messages.success(request, 'Category deleted successfully!')
     return redirect('seller:seller_dashboard')
+
+
+@login_required(login_url='accounts:login')
+def add_product_view(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)  # Include request.FILES for image upload
+        if form.is_valid():
+            product = form.save(commit=False)  # Create the product instance but don't save it yet
+            product.seller = request.user  # Set the seller to the currently logged-in user
+            product.save()  # Now save the product
+            messages.success(request, 'Product added successfully!')
+            return redirect('seller:seller_dashboard')  # Redirect to the dashboard or wherever you want
+    else:
+        form = ProductForm()
+    
+    categories = Category.objects.all()  # Get categories for the dropdown
+    context = {
+        'form': form,
+        'categories': categories,
+    }
+    return render(request, 'seller_dashboard.html', context)  # Adjust the template as needed
+
 
 
 
