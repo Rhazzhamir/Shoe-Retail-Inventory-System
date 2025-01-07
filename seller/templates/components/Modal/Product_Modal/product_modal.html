@@ -9,41 +9,37 @@
             <div class="modal-body">
                 <form method="POST" action="{% url 'seller:add_product' %}" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <!-- Product Name Input -->
+                    <input type="hidden" name="current_image" value=""> <!-- Add this line -->
+                    <!-- Other form fields -->
                     <div class="mb-3">
-                        <label for="productName" class="form-label text-light">Product Name</label>
-                        <input type="text" class="form-control" id="productName" name="product_name" style="background-color: #151f2c; color: white;" required>
+                        <label for="product_name" class="form-label">Product Name</label>
+                        <input type="text" class="form-control" id="product_name" name="product_name" required>
                     </div>
-                    <!-- Product Description Input -->
                     <div class="mb-3">
-                        <label for="productDescription" class="form-label text-light">Description</label>
-                        <textarea class="form-control" id="productDescription" name="description" style="background-color: #151f2c; color: white;" required></textarea>
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
                     </div>
-                    <!-- Product Price Input -->
                     <div class="mb-3">
-                        <label for="productPrice" class="form-label text-light">Price</label>
-                        <input type="number" class="form-control" id="productPrice" name="price" style="background-color: #151f2c; color: white;" required>
+                        <label for="price" class="form-label">Price</label>
+                        <input type="number" class="form-control" id="price" name="price" step="0.01" required>
                     </div>
-                    <!-- Product Stock Input -->
                     <div class="mb-3">
-                        <label for="productStock" class="form-label text-light">Stock</label>
-                        <input type="number" class="form-control" id="productStock" name="stock" style="background-color: #151f2c; color: white;" required>
+                        <label for="stock" class="form-label">Stock</label>
+                        <input type="number" class="form-control" id="stock" name="stock" required>
                     </div>
-                    <!-- Product Image Input -->
                     <div class="mb-3">
-                        <label for="productImage" class="form-label text-light">Image</label>
-                        <input type="file" class="form-control" id="productImage" name="image" style="background-color: #151f2c; color: white;" required>
-                    </div>
-                    <!-- Product Category Input -->
-                    <div class="mb-3">
-                        <label for="productCategory" class="form-label text-light">Category</label>
-                        <select class="form-control" id="productCategory" name="category" style="background-color: #151f2c; color: white;" required>
+                        <label for="category" class="form-label">Category</label>
+                        <select class="form-select" id="category" name="category" required>
                             {% for category in categories %}
-                                <option value="{{ category.id }}">{{ category.category_name }}</option>
+                            <option value="{{ category.id }}">{{ category.category_name }}</option>
                             {% endfor %}
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-success">Submit</button>
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Image</label>
+                        <input type="file" class="form-control" id="image" name="image">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </form>
             </div>
         </div>

@@ -4,6 +4,7 @@ from django.contrib import messages
 from .models import Category , Product
 from .form import CategoryForm , ProductForm
 
+# CATEGORY
 @login_required(login_url='accounts:login')
 def seller_dashboard_view(request):
     category_id = request.POST.get('category_id')  # Get category ID if available
@@ -40,7 +41,7 @@ def delete_category_view(request, category_id):
     messages.success(request, 'Category deleted successfully!')
     return redirect('seller:seller_dashboard')
 
-
+# PRODUCT
 @login_required(login_url='accounts:login')
 def add_product_view(request):
     if request.method == 'POST':
@@ -62,7 +63,33 @@ def add_product_view(request):
     return render(request, 'seller_dashboard.html', context)  # Adjust the template as needed
 
 
-
+@login_required(login_url='accounts:login')
+def edit_product_view(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Product updated successfully!')
+            return redirect('seller:seller_dashboard')
+    else:
+        form = ProductForm(instance=product)
+    
+    categories = Category.objects.all()
+    context = {
+        'form': form,
+        'categories': categories,
+        'product': product,
+    }
+    return render(request, 'seller_dashboard.html', context)
+@login_required(login_url='accounts:login')
+def delete_product_view(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == 'POST':
+        product.delete()
+        messages.success(request, 'Product deleted successfully!')
+        return redirect('seller:seller_dashboard')
+    return render(request, 'seller_dashboard.html')
 
 @login_required(login_url='accounts:login')
 def profile_view(request):

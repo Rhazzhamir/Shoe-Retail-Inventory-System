@@ -788,7 +788,30 @@
     });
 });
 
+// Update_Product
+document.addEventListener('DOMContentLoaded', function () {
+        const editButtons = document.querySelectorAll('.product_edit');
+        editButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const productId = this.getAttribute('data-product-id');
+                const productName = this.getAttribute('data-product-name');
+                const productDescription = this.getAttribute('data-product-description');
+                const productPrice = this.getAttribute('data-product-price');
+                const productStock = this.getAttribute('data-product-stock');
+                const productImage = this.getAttribute('data-product-image');
+                const productCategory = this.getAttribute('data-product-category');
 
+                const modal = document.querySelector('#productModal');
+                modal.querySelector('input[name="product_name"]').value = productName;
+                modal.querySelector('textarea[name="description"]').value = productDescription;
+                modal.querySelector('input[name="price"]').value = productPrice;
+                modal.querySelector('input[name="stock"]').value = productStock;
+                modal.querySelector('select[name="category"]').value = productCategory;
+                modal.querySelector('input[name="current_image"]').value = productImage; // Add this line
+                modal.querySelector('form').action = `{% url 'seller:edit_product' 0 %}`.replace('0', productId);
+            });
+        });
+    });
 
     </script>
 
