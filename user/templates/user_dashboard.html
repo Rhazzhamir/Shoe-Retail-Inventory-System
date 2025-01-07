@@ -24,128 +24,43 @@
 {% block shop %}
     {% load static %}
 
-    <div class="container mt-5">
+    <div class="container mt-5 mb-5">
         <div>
-            <h3 >
+            <h3>
                 <b>
-                    Find your perfect fit!.
+                    Find your perfect fit!
                 </b>
             </h3>
         </div>
         <div class="row g-4 mt-3 justify-content-center">
-            <!-- Card 1 -->
+            {% for product in products %}
             <div class="col-md-3">
-                <div class="card" >
-                    <img src="{% static 'image/scroller/5.jpg' %}" class="card-img-top" alt="Shoe Image 1">
+                <div class="card">
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.product_name }}">
                     <div class="card-body text-center">
-                        <h5 class="card-title">Card Title 1</h5>
-                        <p class="card-text">Explore our exclusive collection of stylish footwear.</p>
-                        <a href="#" class="btn buy_now">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">{{ product.product_name }}</h5>
+                            <small>{{ product.price }}</small>
+                        </div>
+                        <p class="card-text text-light">{{ product.description }}</p>
+                        <button class="btn buy_now">
                             Add to cart
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
-            <!-- Card 2 -->
-            <div class="col-md-3">
-                <div class="card" >
-                    <img src="{% static 'image/scroller/5.jpg' %}" class="card-img-top" alt="Shoe Image 2">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Card Title 2</h5>
-                        <p class="card-text">Find your perfect pair with amazing deals.</p>
-                        <a href="#" class="btn buy_now">
-                            Add to cart
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <!-- Card 3 -->
-            <div class="col-md-3">
-                <div class="card" >
-                    <img src="{% static 'image/scroller/5.jpg' %}" class="card-img-top" alt="Shoe Image 2">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Card Title 2</h5>
-                        <p class="card-text">Find your perfect pair with amazing deals.</p>
-                        <a href="#" class="btn buy_now">
-                            Add to cart
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <!-- Card 4 -->
-            <div class="col-md-3">
-                <div class="card" >
-                    <img src="{% static 'image/scroller/5.jpg' %}" class="card-img-top" alt="Shoe Image 2">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Card Title 2</h5>
-                        <p class="card-text">Find your perfect pair with amazing deals.</p>
-                        <a href="#" class="btn buy_now">
-                            Add to cart
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row g-4 mt-3 justify-content-center">
-            <!-- Card 1 -->
-            <div class="col-md-3">
-                <div class="card" >
-                    <img src="{% static 'image/scroller/5.jpg' %}" class="card-img-top" alt="Shoe Image 1">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Card Title 1</h5>
-                        <p class="card-text">Explore our exclusive collection of stylish footwear.</p>
-                        <a href="#" class="btn buy_now">
-                            Add to cart
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <!-- Card 2 -->
-            <div class="col-md-3">
-                <div class="card" >
-                    <img src="{% static 'image/scroller/5.jpg' %}" class="card-img-top" alt="Shoe Image 2">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Card Title 2</h5>
-                        <p class="card-text">Find your perfect pair with amazing deals.</p>
-                        <a href="#" class="btn buy_now">
-                            Add to cart
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <!-- Card 3 -->
-            <div class="col-md-3">
-                <div class="card" >
-                    <img src="{% static 'image/scroller/5.jpg' %}" class="card-img-top" alt="Shoe Image 2">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Card Title 2</h5>
-                        <p class="card-text">Find your perfect pair with amazing deals.</p>
-                        <a href="#" class="btn buy_now">
-                            Add to cart
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <!-- Card 4 -->
-            <div class="col-md-3">
-                <div class="card" >
-                    <img src="{% static 'image/scroller/5.jpg' %}" class="card-img-top" alt="Shoe Image 2">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Card Title 2</h5>
-                        <p class="card-text">Find your perfect pair with amazing deals.</p>
-                        <a href="#" class="btn buy_now">
-                            Add to cart
-                        </a>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
+        <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center custom-pagination">
+            <li class="page-item previous"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item next"><a class="page-link" href="#">Next</a></li>
+        </ul>
+    </nav>
 {% endblock %}
 
 
-{% block slide %}
-    {% include 'components/slide.html'%}
-
-{% endblock %}

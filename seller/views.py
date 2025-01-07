@@ -1,14 +1,15 @@
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Category , Product
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Category, Product
 from .form import CategoryForm , ProductForm
 
-# CATEGORY
+
 @login_required(login_url='accounts:login')
 def seller_dashboard_view(request):
-    category_id = request.POST.get('category_id')  # Get category ID if available
-    products = Product.objects.filter(seller=request.user)  
+    category_id = request.GET.get('category_id')  # Get category ID from GET request
+    products = Product.objects.filter(seller=request.user)
+
     if request.method == 'POST':
         if category_id:  # If category_id is present, we are updating
             category = get_object_or_404(Category, id=category_id)
@@ -27,10 +28,16 @@ def seller_dashboard_view(request):
         form = CategoryForm()
 
     categories = Category.objects.all()
+    total_sum = categories.count()
+    total_products = products.count()  # Count the total number of products
+
+    
     context = {
         'form': form,
         'categories': categories,
         'products': products,
+        'total_sum': total_sum, 
+        'total_products': total_products,
     }
     return render(request, 'seller_dashboard.html', context)
 
