@@ -2,7 +2,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Category, Product , DeletedCategory , DeletedProduct
-from .form import CategoryForm , ProductForm    
+from .form import CategoryForm , ProductForm  
+
+from django.http import JsonResponse
+
 @login_required(login_url='accounts:login')
 def seller_dashboard_view(request):
     category_id = request.POST.get('category_id')  # Get category ID from POST request
@@ -75,6 +78,12 @@ def delete_category_view(request, category_id):
     messages.success(request, 'Category and related products deleted successfully!')
     return redirect('seller:seller_dashboard')
 
+@login_required(login_url='accounts:login')
+def delete_deleted_category_view(request, category_id):
+    category = get_object_or_404(DeletedCategory, id=category_id)
+    category.delete()
+    return JsonResponse({'success': True})
+
 
 
 # PRODUCT
@@ -143,6 +152,13 @@ def delete_product_view(request, product_id):
     
     messages.success(request, 'Product deleted successfully!')
     return redirect('seller:seller_dashboard')
+
+
+@login_required(login_url='accounts:login')
+def delete_deleted_product_view(request, product_id):
+    product = get_object_or_404(DeletedProduct, id=product_id)
+    product.delete()
+    return JsonResponse({'success': True})
 
 @login_required(login_url='accounts:login')
 def profile_view(request):

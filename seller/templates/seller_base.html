@@ -832,6 +832,34 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
     
+    // delete_history
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.delete-button').forEach(button => {
+            button.addEventListener('click', function () {
+                const id = this.getAttribute('data-id');
+                const isCategory = this.closest('table').classList.contains('deleted-categories-table');
+                const url = isCategory ? 
+                    `{% url 'seller:delete_deleted_category' 0 %}`.replace('0', id) : 
+                    `{% url 'seller:delete_deleted_product' 0 %}`.replace('0', id);
+
+                fetch(url, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        this.closest('tr').remove();
+                    } else {
+                        alert('Failed to delete');
+                    }
+                });
+            });
+        });
+    });
 
     </script>
 

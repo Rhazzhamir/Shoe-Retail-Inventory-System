@@ -6,7 +6,7 @@ from django.contrib.admin import AdminSite
 
 
 # Register your models here.
-admin.site.unregister(User)
+# admin.site.unregister(User)
 admin.site.unregister(Group)
 
 class AuditTrailAdmin(admin.ModelAdmin):
