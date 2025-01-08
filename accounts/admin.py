@@ -1,10 +1,11 @@
+# accounts/admin.py
 from django.contrib import admin
 from django.contrib.auth.models import User ,Group
 from .models import AuditTrail
 from django.contrib.admin import AdminSite
 
-# Register your models here.
 
+# Register your models here.
 admin.site.unregister(User)
 admin.site.unregister(Group)
 
@@ -14,8 +15,6 @@ class AuditTrailAdmin(admin.ModelAdmin):
     search_fields = ('user__username',)
 
 admin.site.register(AuditTrail, AuditTrailAdmin)
-
-
 
 class MyAdminSite(AdminSite):
     def has_permission(self, request):

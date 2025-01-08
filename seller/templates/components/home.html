@@ -139,61 +139,114 @@
         <path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5"/>
     </svg>
 </div>
-<div class="d-flex gap-2 ">
-    <table class="table table-hover ">
-        <thead>
-            <tr>
-                <th class="text-light" scope="col">#</th>
-                <th class="text-light" scope="col">Category</th>
-                <th class="text-light" scope="col">Deleted At</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for deleted_category in deleted_categories %}
-            <tr>
-                <th class="text-light" scope="row">{{ forloop.counter }}</th>
-                <td class="text-light">{{ deleted_category.category_name }}</td>
-                <td class="text-light">{{ deleted_category.deleted_at }}</td>
-            </tr>
-        {% empty %}
-            <tr>
-                <td colspan="3" class="text-danger text-center">No deleted categories found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th class="text-light" scope="col">#</th>
-                <th class="text-light" scope="col">Product</th>
-                <th class="text-light" scope="col">Image</th>
-                <th class="text-light" scope="col">Deleted At</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for deleted_product in deleted_products %}
-            <tr>
-                <th class="text-light" scope="row">{{ forloop.counter }}</th>
-                <td class="text-light">{{ deleted_product.product_name }}</td>
-                <td class="text-light">
-                    {% if deleted_product.image %}
-                        <img src="{{ deleted_product.image.url }}" alt="{{ deleted_product.product_name }}" width="50">
-                    {% else %}
-                        No Image
-                    {% endif %}
-                </td>
-                <td class="text-light">{{ deleted_product.deleted_at }}</td>
-            </tr>
-        {% empty %}
-            <tr>
-                <td colspan="4" class="text-danger text-center">No deleted products found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<div class="d-flex gap-2">
+    <!-- Deleted Categories Table -->
+    <div class="deleted-categories-table-container">
+        <h5>Deleted Categories</h5>
+        <table class="deleted-categories-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Category</th>
+                    <th>Deleted At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for deleted_category in deleted_categories %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ deleted_category.category_name }}</td>
+                        <td>{{ deleted_category.deleted_at }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-danger text-center">No deleted categories found</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Deleted Products Table -->
+    <div class="deleted-products-table-container">
+        <h5>Deleted Products</h5>
+        <table class="deleted-products-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Product</th>
+                    <th>Image</th>
+                    <th>Deleted At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for deleted_product in deleted_products %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ deleted_product.product_name }}</td>
+                        <td>
+                            {% if deleted_product.image %}
+                                <img src="{{ deleted_product.image.url }}" alt="{{ deleted_product.product_name }}" width="50">
+                            {% else %}
+                                No Image
+                            {% endif %}
+                        </td>
+                        <td>{{ deleted_product.deleted_at }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-danger text-center">No deleted products found</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 
+<!-- CSS -->
+<style>
+    .deleted-categories-table-container,
+    .deleted-products-table-container {
+        overflow-x: auto;
+        background: rgba(255, 255, 255, 0.1); /* Transparent background */
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow for contrast */
+        backdrop-filter: blur(10px); /* Adds a blur effect for a frosted glass appearance */
+        width: 48%; /* Adjust width for each table */
+        margin: 0 1%;
+    }
 
-</main>
-            
+    .deleted-categories-table,
+    .deleted-products-table {
+        width: 100%; /* Table adapts to container width */
+        border-collapse: collapse;
+        margin: 0 auto;
+    }
+
+    .deleted-categories-table th,
+    .deleted-categories-table td,
+    .deleted-products-table th,
+    .deleted-products-table td {
+        padding: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.2); /* Transparent border */
+        text-align: left;
+        color: #fff;
+    }
+
+    .deleted-categories-table th,
+    .deleted-products-table th {
+        background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent background for headers */
+        font-weight: bold;
+    }
+
+    .deleted-categories-table tr:nth-child(even),
+    .deleted-products-table tr:nth-child(even) {
+        background-color: rgba(255, 255, 255, 0.05); /* Subtle transparency for alternating rows */
+    }
+
+    .deleted-categories-table tr:hover,
+    .deleted-products-table tr:hover {
+        background-color: rgba(38, 255, 0, 0.2); /* Highlight on hover */
+    }
+</style>

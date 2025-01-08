@@ -92,12 +92,12 @@
                     </ul>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="#notifications_page" class="sidebar-link" data-toggle="tab">
                         <i class="lni lni-popup"></i>
                         <span>Notification
                             <!-- sticky notes -->
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                99+
+                                1
                                 <span class="visually-hidden">unread messages</span>
                             </span>
                         </span>
@@ -133,14 +133,17 @@
                     <div class="tab-pane fade show  " id="category_page">
                         {% include 'components/category.html'%}
                     </div>
-                    <div class="tab-pane fade show " id="product_page" style="background-color: rgb(255, 208, 0); height: 92vh;">
+                    <div class="tab-pane fade show " id="product_page" >
                         {% include 'components/product.html'%}
                     </div>
-                    <div class="tab-pane fade show " id="orders_page" style="background-color: rgb(10, 255, 251); height: 92vh;">
+                    <div class="tab-pane fade show " id="orders_page" >
                         {% include 'components/orders.html'%}
                     </div>
-                    <div class="tab-pane fade show " id="stack_page" style="background-color: rgb(0, 255, 30); height: 92vh;">
+                    <div class="tab-pane fade show " id="stack_page" >
                         {% include 'components/stack.html'%}
+                    </div>
+                    <div class="tab-pane fade show " id="notifications_page" >
+                        {% include 'components/notifications.html'%}
                     </div>
                     <div class="tab-pane fade show " id="settings_page" >
                         {% include 'components/settings.html'%}
