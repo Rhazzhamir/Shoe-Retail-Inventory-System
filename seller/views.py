@@ -3,11 +3,11 @@ from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Category, Product , DeletedCategory , DeletedProduct
 from .form import CategoryForm , ProductForm    
-
+# from accounts.models import AuditTrail
 
 @login_required(login_url='accounts:login')
 def seller_dashboard_view(request):
-    category_id = request.GET.get('category_id')  # Get category ID from GET request
+    category_id = request.POST.get('category_id')  # Get category ID from POST request
     products = Product.objects.filter(seller=request.user)
     
     if request.method == 'POST':
@@ -71,7 +71,7 @@ def delete_category_view(request, category_id):
     
     # Log the deleted category
     DeletedCategory.objects.create(category_name=category.category_name)
-    
+    # AuditTrail.objects.create(user=request.user, action='delete', model_name='Category', object_id=category.id)
     # Delete the category
     category.delete()
     
@@ -89,6 +89,7 @@ def add_product_view(request):
             product = form.save(commit=False)  # Create the product instance but don't save it yet
             product.seller = request.user  # Set the seller to the currently logged-in user
             product.save()  # Now save the product
+            # AuditTrail.objects.create(user=request.user, action='create', model_name='Product', object_id=product.id)
             messages.success(request, 'Product added successfully!')
             return redirect('seller:seller_dashboard')  # Redirect to the dashboard or wherever you want
     else:
@@ -109,6 +110,7 @@ def edit_product_view(request, product_id):
         form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             form.save()
+            # AuditTrail.objects.create(user=request.user, action='update', model_name='Product', object_id=product.id)
             messages.success(request, 'Product updated successfully!')
             return redirect('seller:seller_dashboard')
     else:
@@ -141,7 +143,7 @@ def delete_product_view(request, product_id):
         price=product.price,
         stock=product.stock
     )
-    
+    # AuditTrail.objects.create(user=request.user, action='delete', model_name='Product', object_id=product.id)
     # Delete the product
     product.delete()
     

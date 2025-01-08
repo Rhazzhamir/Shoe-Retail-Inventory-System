@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.models import User
+from .models import AuditTrail
 # Create your views here.
 
 def register_view(request):
@@ -27,9 +28,13 @@ def login_view(request):
         form = CustomAuthenticationForm(data=request.POST)
         if form.is_valid():
             user = form.get_user()
-            login(request , user)
+            login(request, user)
 
-            messages.success(request , 'Login Successful')
+            # Log the login action for sellers only
+            if user.is_staff:
+                AuditTrail.objects.create(user=user, action='login')
+
+            messages.success(request, 'Login Successful')
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
             if user.is_superuser:
@@ -40,11 +45,16 @@ def login_view(request):
                 return redirect('Customer:user_dashboard')
     else:
         form = CustomAuthenticationForm()
-    return render(request , 'login.html' , {'form' : form})
-
+    return render(request, 'login.html', {'form': form})
 
 def logout_view(request):
     if request.method == 'POST':
+        user = request.user
+
+        # Log the logout action for sellers only
+        if user.is_staff:
+            AuditTrail.objects.create(user=user, action='logout')
+
         logout(request)
         messages.success(request, 'Logout successful! You have been logged out.')
         return redirect('accounts:login')

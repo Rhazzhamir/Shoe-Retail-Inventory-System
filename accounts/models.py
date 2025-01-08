@@ -9,3 +9,17 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+    
+
+class AuditTrail(models.Model):
+    ACTION_CHOICES = [
+        ('login', 'Login'),
+        ('logout', 'Logout'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    action = models.CharField(max_length=10, choices=ACTION_CHOICES)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.action} - {self.timestamp}"
