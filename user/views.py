@@ -16,5 +16,6 @@ def dashboard(request):
 def shopping_cart(request):
     return render(request , 'shopping_cart.html')
 
+@login_required(login_url='accounts:login')
 def about(request):
     return render( request, 'about.html')

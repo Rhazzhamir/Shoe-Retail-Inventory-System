@@ -1,15 +1,15 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Category, Product
-from .form import CategoryForm , ProductForm
+from .models import Category, Product , DeletedCategory , DeletedProduct
+from .form import CategoryForm , ProductForm    
 
 
 @login_required(login_url='accounts:login')
 def seller_dashboard_view(request):
     category_id = request.GET.get('category_id')  # Get category ID from GET request
     products = Product.objects.filter(seller=request.user)
-
+    
     if request.method == 'POST':
         if category_id:  # If category_id is present, we are updating
             category = get_object_or_404(Category, id=category_id)
@@ -31,22 +31,54 @@ def seller_dashboard_view(request):
     total_sum = categories.count()
     total_products = products.count()  # Count the total number of products
 
-    
+    # Fetch deleted history
+    deleted_categories = DeletedCategory.objects.all()
+    deleted_products = DeletedProduct.objects.all()
+
     context = {
         'form': form,
         'categories': categories,
         'products': products,
-        'total_sum': total_sum, 
+        'total_sum': total_sum,
         'total_products': total_products,
+        'deleted_categories': deleted_categories,
+        'deleted_products': deleted_products,
     }
     return render(request, 'seller_dashboard.html', context)
+
+
+# @login_required(login_url='accounts:login')
+# def delete_category_view(request, category_id):
+#     category = get_object_or_404(Category, id=category_id)
+#     category.delete()
+#     messages.success(request, 'Category deleted successfully!')
+#     return redirect('seller:seller_dashboard')
 
 @login_required(login_url='accounts:login')
 def delete_category_view(request, category_id):
     category = get_object_or_404(Category, id=category_id)
+    
+    # Log the deleted products related to the category
+    products = category.products.all()  # Get all products related to this category
+    for product in products:
+        DeletedProduct.objects.create(
+            product_name=product.product_name,
+            image=product.image,
+            description=product.description,
+            price=product.price,
+            stock=product.stock
+        )
+    
+    # Log the deleted category
+    DeletedCategory.objects.create(category_name=category.category_name)
+    
+    # Delete the category
     category.delete()
-    messages.success(request, 'Category deleted successfully!')
+    
+    messages.success(request, 'Category and related products deleted successfully!')
     return redirect('seller:seller_dashboard')
+
+
 
 # PRODUCT
 @login_required(login_url='accounts:login')
@@ -89,14 +121,32 @@ def edit_product_view(request, product_id):
         'product': product,
     }
     return render(request, 'seller_dashboard.html', context)
+# @login_required(login_url='accounts:login')
+# def delete_product_view(request, product_id):
+#     product = get_object_or_404(Product, id=product_id)
+#     if request.method == 'POST':
+#         product.delete()
+#         messages.success(request, 'Product deleted successfully!')
+#         return redirect('seller:seller_dashboard')
+#     return render(request, 'seller_dashboard.html')
 @login_required(login_url='accounts:login')
 def delete_product_view(request, product_id):
     product = get_object_or_404(Product, id=product_id)
-    if request.method == 'POST':
-        product.delete()
-        messages.success(request, 'Product deleted successfully!')
-        return redirect('seller:seller_dashboard')
-    return render(request, 'seller_dashboard.html')
+    
+    # Log the deleted product
+    DeletedProduct.objects.create(
+        product_name=product.product_name,
+        image=product.image,
+        description=product.description,
+        price=product.price,
+        stock=product.stock
+    )
+    
+    # Delete the product
+    product.delete()
+    
+    messages.success(request, 'Product deleted successfully!')
+    return redirect('seller:seller_dashboard')
 
 @login_required(login_url='accounts:login')
 def profile_view(request):
