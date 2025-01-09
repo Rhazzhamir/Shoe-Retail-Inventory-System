@@ -680,6 +680,20 @@
             top: -115%;
             }
 
+            .table-responsive {
+                overflow-x: auto;
+            }
+
+            .table td, .table th {
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+
+            .table td.description {
+                max-width: 200px; /* Adjust as needed */
+            }
+
             /* orders */
             .Get_apps{
                 background-color: #a9d8b6;

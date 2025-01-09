@@ -35,15 +35,13 @@
         <div class="row g-4 mt-3 justify-content-center">
             {% for product in products %}
             <div class="col-md-3">
-                <div class="card">
-                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.product_name }}">
-                    <div class="card-body text-center">
-                        <div class="d-flex justify-content-between">
-                            <h5 class="card-title">{{ product.product_name }}</h5>
-                            <small>{{ product.price }}</small>
-                        </div>
+                <div class="card h-100">
+                    <img src="{{ product.image.url }}" class="card-img-top img-fluid" alt="{{ product.product_name }}" style="object-fit: cover; height: 200px;">
+                    <div class="card-body text-center d-flex flex-column">
+                        <h5 class="card-title">{{ product.product_name }}</h5>
+                        <small>{{ product.price }}</small>
                         <p class="card-text text-light">{{ product.description }}</p>
-                        <button class="btn buy_now">
+                        <button class="btn buy_now mt-auto">
                             Add to cart
                         </button>
                     </div>
