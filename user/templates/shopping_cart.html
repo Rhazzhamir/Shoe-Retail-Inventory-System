@@ -8,11 +8,20 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" />
     <link rel="stylesheet" href="{% static 'style/shopping_cart.css' %}">
+    <link rel="stylesheet" href="{% static 'style/cart_message.css' %}">
+
     
     <title>Shopping Cart</title>
 </head>
 
 <body>
+    <div id="cart-message" class=" cart_message">
+        {% if messages %}
+            {% for message in messages %}
+                <p class="text-dark fs-1">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-10 col-11 mx-auto">
@@ -31,72 +40,73 @@
                             <h2 class="py-4 noto-serif-ahom-regular text-light ">Shopping Cart</h2>
                             <small class="py-4 mt-1 text-light">(2 items)</small> 
                         </div>
-                        <div class="card p-4" >
-                            <div class="row">
-                                <!-- Cart images div -->
-                                <div class="col-md-5 col-11 mx-auto bg-light d-flex justify-content-center align-items-center shadow product_img">
-                                    <img src="{% static 'image/scroller/5.jpg' %}" class="img-fluid" alt="cart img">
-                                </div>
-
-                                <!-- Cart product details -->
-                                <div class="col-md-7 col-11 mx-auto px-4 mt-2">
-                                    <div class="row">
-                                        <!-- Product name -->
-                                        <div class="col-6 card-title ">
-                                            <h1 class="mb-4 product_name text-light noto-serif-ahom-regular">Blue Zara Shirt</h1>
-                                            <p class="mb-2 text-light">Price:</p>
-                                            <p class="mb-2 text-light">Size:</p>
-                                            <p class="mb-3 text-light" id="quantity-display">Quantity: 0</p> 
-                                        </div>
-                                        <!-- Quantity inc dec -->
-                                        <div class="col-6">
-                                            <ul class="pagination justify-content-end set_quantity">
-                                                <li class="page-item">
-                                                    <button class="page-link" onclick="decreaseNumber('textbox')">
-                                                        <i class="fas fa-minus"></i>
-                                                    </button>
-                                                </li>
-                                                <li class="page-item">
-                                                    <input type="text" class="page-link" value="0" id="textbox" readonly>
-                                                </li>
-                                                <li class="page-item">
-                                                    <button class="page-link" onclick="increaseNumber('textbox')">
-                                                        <i class="fas fa-plus"></i>
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </div>
+                        {% for cart_item in cart_items %}
+                            <div class="card p-4">
+                                <div class="row">
+                                    <!-- Cart images div -->
+                                    <div class="col-md-5 col-11 mx-auto bg-light d-flex justify-content-center align-items-center shadow product_img">
+                                        <img src="{{ cart_item.product.image.url }}" class="img-fluid" alt="{{ cart_item.product.product_name }}">
                                     </div>
-                                    <div class="row d-flex justify-content-end ">
-                                        <!--Delete-->
-                                        <button class="delete_cart ">
-                                            <svg viewBox="0 0 15 17.5" height="17.5" width="15" xmlns="http://www.w3.org/2000/svg" class="icon ">
-                                                <path transform="translate(-2.5 -1.25)" d="M15,18.75H5A1.251,1.251,0,0,1,3.75,17.5V5H2.5V3.75h15V5H16.25V17.5A1.251,1.251,0,0,1,15,18.75ZM5,5V17.5H15V5Zm7.5,10H11.25V7.5H12.5V15ZM8.75,15H7.5V7.5H8.75V15ZM12.5,2.5h-5V1.25h5V2.5Z" id="Fill"></path>
-                                            </svg>
-                                        </button>
-                                        <!-- CheckBox -->
-                                        <div class="checkbox checkbox-wrapper-12">
-                                            <div class="cbx">
-                                                <input  type="checkbox" id="cbx-12">
-                                                <label for="cbx-12"></label>
-                                                <svg fill="none" viewBox="0 0 15 14" height="14" width="15">
-                                                <path d="M2 8.36364L6.23077 12L13 2"></path>
-                                                </svg>
-                                            </div>  
-                                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
-                                                <defs>
-                                                <filter id="goo-12">
-                                                    <feGaussianBlur result="blur" stdDeviation="4" in="SourceGraphic"></feGaussianBlur>
-                                                    <feColorMatrix result="goo-12" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -7" mode="matrix" in="blur"></feColorMatrix>
-                                                    <feBlend in2="goo-12" in="SourceGraphic"></feBlend>
-                                                </filter>
-                                                </defs>
-                                            </svg>
+
+                                    <!-- Cart product details -->
+                                    <div class="col-md-7 col-11 mx-auto px-4 mt-2">
+                                        <div class="row">
+                                            <!-- Product name -->
+                                            <div class="col-6 card-title">
+                                                <h1 class="mb-4 product_name text-light">{{ cart_item.product.product_name }}</h1>
+                                                <p class="mb-2 text-light">Description: {{ cart_item.product.description }}</p>
+                                                <p class="mb-2 text-light">Price: ${{ cart_item.product.price }}</p>
+                                                <p class="mb-3 text-light" id="quantity-display">Quantity: {{ cart_item.quantity }}</p>
+                                            </div>
+                                            <!-- Quantity inc dec -->
+                                            <div class="col-6">
+                                                <ul class="pagination justify-content-end set_quantity">
+                                                    <li class="page-item">
+                                                        <button class="page-link" onclick="decreaseNumber('textbox')">
+                                                            <i class="fas fa-minus"></i>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item">
+                                                        <input type="text" class="page-link" value="{{ cart_item.quantity }}" id="textbox" readonly>
+                                                    </li>
+                                                    <li class="page-item">
+                                                        <button class="page-link" onclick="increaseNumber('textbox')">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="row d-flex justify-content-end">
+                                            
+                                            <!-- Delete Button -->
+                                            <form method="post" action="{% url 'Customer:remove_from_cart' cart_item.id %}" class="d-flex align-items-center" >
+                                                {% csrf_token %}
+                                                <button type="submit" class="delete_cart">
+                                                    <svg viewBox="0 0 15 17.5" height="17.5" width="15" xmlns="http://www.w3.org/2000/svg" class="icon">
+                                                        <path transform="translate(-2.5 -1.25)" d="M15,18.75H5A1.251,1.251,0,0,1,3.75,17.5V5H2.5V3.75h15V5H16.25V17.5A1.251,1.251,0,0,1,15,18.75ZM5,5V17.5H15V5Zm7.5,10H11.25V7.5H12.5V15ZM8.75,15H7.5V7.5H8.75V15ZM12.5,2.5h-5V1.25h5V2.5Z" id="Fill"></path>
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                            <!-- CheckBox -->
+                                            <div class="checkbox checkbox-wrapper-12">
+                                                <div class="cbx">
+                                                    <input type="checkbox" id="cbx-12">
+                                                    <label for="cbx-12"></label>
+                                                    <svg fill="none" viewBox="0 0 15 14" height="14" width="15">
+                                                        <path d="M2 8.36364L6.23077 12L13 2"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        {% empty %}
+                            <p class="text-danger ">Your cart is empty.</p>
+                        {% endfor %}
+
+
                         <hr /> 
                     </div>
                     <!-- Right side div -->
@@ -153,4 +163,6 @@
     <!-- Optional JavaScript -->
     <!-- Popper.js first, then Bootstrap JS -->
     <script src="{% static 'js/Quantity.js' %}" defer></script>
+    <script src="{% static 'js/cart_message.js' %}" defer></script>
+
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJ

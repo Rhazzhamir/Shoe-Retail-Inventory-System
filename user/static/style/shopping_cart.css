@@ -171,6 +171,7 @@ h2 {
     z-index: 1000; /* Ensures it stays above other content */
 }
 
+
 .delete_cart {
     background-color: transparent;
     position: relative;
@@ -182,7 +183,7 @@ h2 {
     content: 'delete';
     position: absolute;
     top: -130%;
-    left: 50%;
+    left: 10%;
     transform: translateX(-50%);
     width: fit-content;
     height: fit-content;
