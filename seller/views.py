@@ -31,6 +31,7 @@ def seller_dashboard_view(request):
     categories = Category.objects.all()
     total_sum = categories.count()
     total_products = products.count()  # Count the total number of products
+    total_stock = sum(product.stock for product in products)
 
     # Fetch deleted history
     deleted_categories = DeletedCategory.objects.all()
@@ -42,6 +43,7 @@ def seller_dashboard_view(request):
         'products': products,
         'total_sum': total_sum,
         'total_products': total_products,
+        'total_stock': total_stock,
         'deleted_categories': deleted_categories,
         'deleted_products': deleted_products,
     }

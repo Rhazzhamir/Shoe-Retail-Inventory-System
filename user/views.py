@@ -50,7 +50,12 @@ def shopping_cart(request):
     customer = request.user
     cart_items = Cart.objects.filter(customer=customer)
 
-    return render(request, 'shopping_cart.html', {'cart_items': cart_items})
+    total_items = cart_items.count()
+
+    return render(request, 'shopping_cart.html', {
+        'cart_items': cart_items ,
+        'total_items': total_items,
+        })
 
 
 @login_required(login_url='accounts:login')

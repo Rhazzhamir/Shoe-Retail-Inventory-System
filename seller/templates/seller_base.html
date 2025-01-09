@@ -834,6 +834,76 @@
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow for contrast */
         backdrop-filter: blur(10px); 
     }
+
+    /* stock */
+    .stock-table-container {
+    overflow-x: auto;
+    background: rgba(255, 255, 255, 0.1); /* Transparent background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow for contrast */
+    backdrop-filter: blur(10px); /* Adds a blur effect for a frosted glass appearance */
+    width: 80%; /* Wider table */
+    margin: 0 auto; /* Center the container */
+}
+
+.stock-table {
+    width: 100%; /* Table adapts to container width */
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.stock-table th,
+.stock-table td {
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Transparent border */
+    text-align: left;
+    color: #fff;
+}
+
+.stock-table th {
+    background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent background for headers */
+    font-weight: bold;
+}
+
+.stock-table tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.05); /* Subtle transparency for alternating rows */
+}
+
+.stock-table tr:hover {
+    background-color: rgba(38, 255, 0, 0.2); /* Highlight on hover */
+}
+
+.action-button {
+    background-color: #28a745; /* Green for restore */
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.action-button:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+.history-stock-table th {
+    text-align: center;
+}
+
+.history-stock-table td {
+    text-align: center;
+}
+
+.history-stock-table td .action-button {
+    margin: 0 auto; /* Center the button */
+    display: block; /* Make button a block element */
+}
+
+/* category.html table */
+
+
     </style>
 </head>
 
