@@ -55,6 +55,9 @@
                                             <!-- Product name -->
                                             <div class="col-6 card-title">
                                                 <h1 class="mb-4 product_name text-light">{{ cart_item.product.product_name }}</h1>
+                                                {% if cart_item.product.stock == 0 %}
+                                                    <div class="alert alert-danger">Out of Stock!</div>
+                                                {% endif %}
                                                 <p class="mb-2 text-light">Description: {{ cart_item.product.description }}</p>
                                                 <p class="mb-2 text-light">Price: ${{ cart_item.product.price }}</p>
                                                 <p class="mb-3 text-light" id="quantity-display-{{ cart_item.id }}">Quantity: {{ cart_item.quantity }}</p>
@@ -79,7 +82,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="row d-flex justify-content-end">
+                                        <div class="d-flex justify-content-end">
                                             <!-- Delete Button -->
                                             <form method="post" action="{% url 'Customer:remove_from_cart' cart_item.id %}" class="d-flex align-items-center">
                                                 {% csrf_token %}
@@ -93,7 +96,13 @@
                                             <!-- CheckBox for total price calculation -->
                                             <div class="checkbox checkbox-wrapper-12">
                                                 <div class="cbx">
-                                                    <input type="checkbox" class="cart-checkbox" data-price="{{ cart_item.product.price }}" data-id="{{ cart_item.id }}" data-quantity="{{ cart_item.quantity }}">
+                                                    <input type="checkbox" 
+                                                        class="cart-checkbox" 
+                                                        data-price="{{ cart_item.product.price }}" 
+                                                        data-id="{{ cart_item.id }}" 
+                                                        data-quantity="{{ cart_item.quantity }}"
+                                                        data-stock="{{ cart_item.product.stock }}"
+                                                        {% if cart_item.product.stock == 0 %}disabled{% endif %}>
                                                     <label for="cbx-12"></label>
                                                 </div>
                                             </div>
@@ -110,32 +119,7 @@
 
                     <!-- Right side div -->
                     <div class="col-md-12 col-lg-4 col-11 mx-auto mt-lg-0 mt-md-5">
-                        <!-- Discount code part -->
-                        <div class="discount_code mt-3 shadow fixed-right-Discount-code">
-                            <div class="card">
-                                <div class="card-body">
-                                    <a class="d-flex justify-content-between" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                        Add a discount code (optional)
-                                        <span><i class="fas fa-chevron-down pt-1"></i></span>
-                                    </a>
-                                    <div class="collapse" id="collapseExample">
-                                        <div class="mt-3">
-                                            <input type="text" id="discount_code1" class="form-control font-weight-bold" placeholder="Enter the discount code">
-                                            <small id="error_trw" class="text-dark mt-3">code is thapa</small>
-                                        </div>
-                                        <button class="btn btn-primary btn-sm mt-3" onclick="discount_code()">Apply</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Discount code ends -->
-                        <div class="mt-3 shadow p-3 bg-white fixed-right-Discount-ends">
-                            <div class="pt-4">
-                                <h5 class="mb-4">Expected delivery date</h5>
-                                <p>July 27th 2020 - July 29th 2020</p>
-                                <!-- Thankyou message -->
-                            </div>
-                        </div>
+                        
                         <!-- Total -->
                         <div class="right_side p-3 shadow bg-white fixed-right-Total">
                             <h2 class="product_name mb-5">The Total Amount Of</h2>
@@ -148,9 +132,12 @@
                                 <p>$<span class="text-success" id="shipping_charge">50.0</span></p>
                             </div> -->
                             <hr />
-                            <div class="d-flex justify-content-end">
-                                <button class="checkout btn text-uppercase">Checkout</button>
-                            </div>
+                            <form method="post" action="{% url 'Customer:checkout' %}" id="checkoutForm">
+                                {% csrf_token%}
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="checkout btn text-uppercase" id="checkoutBtn">Checkout</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -163,7 +150,121 @@
 <!-- Popper.js first, then Bootstrap JS -->
 <script src="{% static 'js/Quantity.js' %}" defer></script>
 <script src="{% static 'js/cart_message.js' %}" defer></script>
+<script>
+// Function to update total amount
+function updateTotalAmount() {
+    let total = 0;
+    const checkedBoxes = document.querySelectorAll('.cart-checkbox:checked');
+    checkedBoxes.forEach(checkbox => {
+        const price = parseFloat(checkbox.getAttribute('data-price'));
+        const quantity = parseInt(checkbox.getAttribute('data-quantity'));
+        total += price * quantity;
+    });
+    document.getElementById('product_total_amt').textContent = total.toFixed(2);
+}
 
+// Add event listeners to checkboxes
+document.querySelectorAll('.cart-checkbox').forEach(checkbox => {
+    checkbox.addEventListener('change', updateTotalAmount);
+});
+
+// Handle form submission
+document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Clear any existing hidden inputs
+    const existingInputs = this.querySelectorAll('input[name="selected_items[]"]');
+    existingInputs.forEach(input => input.remove());
+    
+    // Get checked checkboxes
+    const checkedBoxes = document.querySelectorAll('.cart-checkbox:checked');
+    
+    if (checkedBoxes.length === 0) {
+        alert('Please select items to checkout');
+        return;
+    }
+    
+    // Add only selected item IDs to form
+    checkedBoxes.forEach(checkbox => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'selected_items[]';
+        input.value = checkbox.getAttribute('data-id');
+        this.appendChild(input);
+    });
+    
+    // Submit the form with only selected items
+    this.submit();
+});document.addEventListener('DOMContentLoaded', function() {
+    // Function to update total amount
+    function updateTotalAmount() {
+        let total = 0;
+        const checkedBoxes = document.querySelectorAll('.cart-checkbox:checked');
+        checkedBoxes.forEach(checkbox => {
+            const price = parseFloat(checkbox.getAttribute('data-price'));
+            const quantity = parseInt(checkbox.getAttribute('data-quantity'));
+            total += price * quantity;
+        });
+        document.getElementById('product_total_amt').textContent = total.toFixed(2);
+    }
+
+    // Add event listeners to checkboxes
+    document.querySelectorAll('.cart-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const stock = parseInt(this.getAttribute('data-stock'));
+            if (stock === 0 && this.checked) {
+                alert("This item is out of stock!");
+                this.checked = false;
+                return;
+            }
+            updateTotalAmount();
+        });
+    });
+
+    // Handle form submission
+    document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const checkedBoxes = document.querySelectorAll('.cart-checkbox:checked');
+        
+        if (checkedBoxes.length === 0) {
+            alert('Please select items to checkout');
+            return;
+        }
+
+        // Check if any selected item has zero stock
+        let hasZeroStock = false;
+        checkedBoxes.forEach(checkbox => {
+            const stock = parseInt(checkbox.getAttribute('data-stock'));
+            if (stock === 0) {
+                hasZeroStock = true;
+            }
+        });
+
+        if (hasZeroStock) {
+            alert('Cannot checkout items that are out of stock!');
+            return;
+        }
+
+        // Clear existing inputs
+        const existingInputs = this.querySelectorAll('input[name="selected_items[]"]');
+        existingInputs.forEach(input => input.remove());
+        
+        // Add selected items to form
+        checkedBoxes.forEach(checkbox => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'selected_items[]';
+            input.value = checkbox.getAttribute('data-id');
+            this.appendChild(input);
+        });
+        
+        // Submit the form
+        this.submit();
+    });
+});
+
+</script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
 </html>

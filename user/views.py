@@ -3,9 +3,12 @@ from django.contrib.auth.decorators import login_required
 from seller.models import Product
 from django.http import JsonResponse
 from seller.models import Product 
-from .models import Cart
+from .models import Cart , Order
 from django.contrib import messages
-
+from decimal import Decimal
+from django.db import transaction
+from django.http import HttpResponse
+import json
 # Create your views here.
 
 @login_required(login_url='accounts:login')
@@ -72,4 +75,70 @@ def cart(request):
 
 
 def orders(request):
-    return render(request, 'components/user_orders.html')
+    user_orders = Order.objects.filter(user=request.user)
+    return render(request, 'components/user_orders.html', {'orders': user_orders})
+
+@login_required(login_url='accounts:login')
+# def checkout(request):
+#     if request.method == 'POST':
+#         selected_items = request.POST.getlist('selected_items')
+#         for item_id in selected_items:
+#             cart_item = Cart.objects.get(id=item_id)
+#             Order.objects.create(
+#                 user=request.user,
+#                 product=cart_item.product,
+#                 quantity=cart_item.quantity,
+#                 total_price=cart_item.product.price * cart_item.quantity
+#             )
+#             cart_item.delete()  
+#         return redirect('Customer:orders')  
+#     return redirect('Customer:shopping_cart')
+
+def checkout(request):
+    if request.method == 'POST':
+        try:
+            selected_items = request.POST.getlist('selected_items[]')
+            
+            if not selected_items:
+                messages.error(request, "Please select items to checkout!")
+                return redirect('Customer:cart')
+
+            with transaction.atomic():
+                cart_items = Cart.objects.filter(
+                    customer=request.user,
+                    id__in=selected_items
+                ).select_related('product')
+                
+                # Check if any selected product has zero stock
+                for cart_item in cart_items:
+                    if cart_item.product.stock == 0:
+                        messages.error(request, f"{cart_item.product.product_name} is out of stock!")
+                        return redirect('Customer:cart')
+                
+                # Process checkout for items with stock
+                for cart_item in cart_items:
+                    total_price = Decimal(cart_item.product.price) * cart_item.quantity
+                    
+                    # Create order
+                    Order.objects.create(
+                        user=request.user,
+                        product=cart_item.product,
+                        quantity=cart_item.quantity,
+                        total_price=total_price
+                    )
+                    
+                    # Update stock
+                    cart_item.product.stock -= cart_item.quantity
+                    cart_item.product.save()
+                    
+                    # Remove from cart
+                    cart_item.delete()
+                
+                messages.success(request, "Order placed successfully!")
+                return redirect('Customer:orders')
+                
+        except Exception as e:
+            messages.error(request, "An error occurred during checkout.")
+            return redirect('Customer:cart')
+            
+    return redirect('Customer:cart')

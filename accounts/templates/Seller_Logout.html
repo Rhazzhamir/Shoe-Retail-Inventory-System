@@ -1,8 +1,8 @@
     <form action="{% url 'accounts:logout'%}" method="POST">
         {% csrf_token %}
         <div class="d-flex justify-content-center mb-2">
-            <button type="submit" class="btn border-0 bg-transparent text-white ">
-                <i class="lni lni-exit " style="font-size: 24px;"></i>
+            <button type="submit" class="btn border-0 bg-transparent text-danger ">
+                <i class="lni lni-exit "  style="font-size: 20px;"></i>
             </button>
         </div>
     </form>

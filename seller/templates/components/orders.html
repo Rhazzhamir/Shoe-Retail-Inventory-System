@@ -40,13 +40,22 @@
 
         <div class="container my-5">
             <div class="row stats-container">
+                <!-- modal calendar-->
+                <div id="calendarModal" class="calendar-modal" style="display: none;">
+                    <div class="calendar-content">
+                        <input type="text" id="calendarInput">
+                    </div>
+                </div>
                 <!-- Stats section -->
-                <div class="col-12 col-md-2 d-flex align-items-center border-end border-dark justify-content-center gap-2 stat-item">
+                <div class="col-12 col-md-2 d-flex align-items-center border-end border-dark justify-content-center gap-2 stat-item" id="calendarTrigger" style="cursor: pointer;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="calendar text-dark bi bi-calendar-minus-fill" viewBox="0 0 16 16">
-                        <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2M6 10h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1 0-1"/>
+                        <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2M6 10h4a.5.5 0 0 1 0 1H6a.5.5.0 1 0"/>
                     </svg>
                     <span class="text-dark">Today</span>
                 </div>
+                <!-- Hidden Input for Flatpickr -->
+                <input type="text" id="calendar" style="display:none;">
+
                 <div class="col-6 col-md-2 border-end border-dark stat-item">
                     <div class="stat-value">48</div>
                     <div class="stat-label">Total orders</div>
@@ -76,7 +85,7 @@
                     <tr class="header-orders">
                         <th class="text-black" scope="col">Id</th>
                         <th class="text-black" scope="col">Name</th>
-                        <th class="text-black" scope="col">Description</th>
+                        <th class="text-black" scope="col">Product</th>
                         <th class="text-black" scope="col">Price</th>
                         <th class="text-black" scope="col">Stock</th>
                         <th class="text-black" scope="col">Created At</th>
@@ -88,7 +97,7 @@
                     <!-- Repeat this block for each product -->
                     <tr>
                         <th class="text-light" scope="row">1</th>
-                        <td class="text-light">Mark</td>
+                        <td class="text-light">shoes</td>
                         <td class="text-light">Description here</td>
                         <td class="text-light">$49.99</td>
                         <td class="text-light">100</td>
