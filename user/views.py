@@ -70,3 +70,6 @@ def cart(request):
     cart_items = Cart.objects.filter(customer=request.user)
     return render(request, 'shopping_cart.html', {'cart_items': cart_items})
 
+
+def orders(request):
+    return render(request, 'components/user_orders.html')
