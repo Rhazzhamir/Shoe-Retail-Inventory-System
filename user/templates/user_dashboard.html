@@ -43,11 +43,16 @@
                         <p class="card-text text-light">{{ product.description }}</p>
                         <form action="{% url 'Customer:add_to_cart' product.id %}" method="POST">
                             {% csrf_token %}
-                            <button type="submit" class="btn buy_now mt-auto">
-                                Add to cart
-                            </button>
+                            {% if product.stock == 0 %}
+                                <button type="submit" class="btn buy_now mt-auto " disabled style="background-color: red; border: none; cursor: not-allowed;">
+                                    Out of stock
+                                </button>
+                            {% else %}
+                                <button type="submit" class="btn buy_now mt-auto">
+                                    Add to cart
+                                </button>
+                            {% endif %}
                         </form>
-
                     </div>
                 </div>
             </div>

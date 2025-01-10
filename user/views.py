@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect ,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from seller.models import Product
 from django.http import JsonResponse
@@ -142,3 +142,15 @@ def checkout(request):
             return redirect('Customer:cart')
             
     return redirect('Customer:cart')
+
+def cancel_order(request, order_id):
+    # Ensure the order belongs to the current user
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    
+    try:
+        order.delete()  # Delete the order
+        messages.success(request, "Order has been successfully cancelled.")
+    except Exception as e:
+        messages.error(request, "An error occurred while cancelling the order.")
+    
+    return redirect('Customer:orders')

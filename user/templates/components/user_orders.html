@@ -23,6 +23,7 @@
             </a>
             <h1 class="mb-0 text-light noto-serif-ahom-regular">Your Orders</h1>
         </div>
+        <!-- Orders Table -->
         <table class="orders-table mt-5 table table-striped">
             <thead>
                 <tr>
@@ -48,10 +49,13 @@
                         <td class="text-dark">${{ order.total_price }}</td>
                         <td class="text-dark">{{ order.customer.id }}</td>
                         <td class="text-dark">{{ order.order_date|date:"Y-m-d H:i" }}</td>
-                        <td class="text-dark">{{ order.status }}</td>
+                        <td class="text-dark">{{ order.status|default:"pending" }}</td>
                         <td class="text-dark">Active</td>
                         <td>
-                            <button class="btn btn-danger btn-sm delete-button" data-id="{{ order.id }}">Cancel</button>
+                            <form action="{% url 'Customer:cancel_order' order.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                            </form>
                         </td>
                     </tr>
                 {% empty %}
