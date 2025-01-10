@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'style/user_orders.css' %}">
+    <link rel="stylesheet" href="{% static 'style/modal_feedback.css' %}">
+
     <title>Orders</title>
 </head>
 <body>
@@ -32,7 +34,7 @@
                     <th>Product</th>
                     <th>Quantity</th>
                     <th>Total Price</th>
-                    <th>Customer ID</th>
+                    <th>Feedback</th>
                     <th>Order Date</th>
                     <th>Order Status</th>
                     <th>Status</th>
@@ -46,8 +48,17 @@
                         <td class="text-dark">{{ order.id }}</td>
                         <td class="text-dark">{{ order.product.product_name }}</td>
                         <td class="text-dark">{{ order.quantity }}</td>
-                        <td class="text-dark">${{ order.total_price }}</td>
-                        <td class="text-dark">{{ order.customer.id }}</td>
+                        <td class="text-dark">₱{{ order.total_price }}</td>
+                        <td class="text-dark">
+                            {% if not order.feedback_set.exists %}
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackModal-{{ order.id }}">
+                                    Add Feedback
+                                </button>
+                            {% else %}
+                                <span class="badge bg-success">Feedback Submitted</span>
+                            {% endif %}
+                            {% include 'components/modal_feedback.html' %}
+                        </td>
                         <td class="text-dark">{{ order.order_date|date:"Y-m-d H:i" }}</td>
                         <td class="text-dark">{{ order.status|default:"pending" }}</td>
                         <td class="text-dark">Active</td>

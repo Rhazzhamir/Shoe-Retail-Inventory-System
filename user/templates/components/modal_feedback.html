@@ -1,0 +1,22 @@
+<div class="modal fade" id="feedbackModal-{{ order.id }}" tabindex="-1" aria-labelledby="feedbackModalLabel-{{ order.id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="feedbackModalLabel-{{ order.id }}">Share Your Feedback</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="feedbackForm-{{ order.id }}" action="{% url 'Customer:submit_feedback' order.id %}" method="POST">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="feedbackInput-{{ order.id }}" class="form-label text-dark">How was your experience with this product?</label>
+                        <textarea class="form-control text-dark" id="feedbackInput-{{ order.id }}" name="feedback_text" rows="4" placeholder="Share your thoughts..." required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Submit Feedback</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

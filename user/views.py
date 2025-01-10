@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from seller.models import Product
 from django.http import JsonResponse
 from seller.models import Product 
-from .models import Cart , Order
+from .models import Cart , Order ,Feedback
 from django.contrib import messages
 from decimal import Decimal
 from django.db import transaction
@@ -144,13 +144,50 @@ def checkout(request):
     return redirect('Customer:cart')
 
 def cancel_order(request, order_id):
-    # Ensure the order belongs to the current user
-    order = get_object_or_404(Order, id=order_id, user=request.user)
-    
-    try:
-        order.delete()  # Delete the order
-        messages.success(request, "Order has been successfully cancelled.")
-    except Exception as e:
-        messages.error(request, "An error occurred while cancelling the order.")
-    
+    if request.method == 'POST':
+        try:
+            with transaction.atomic():
+                # Get the order and ensure it belongs to the current user
+                order = get_object_or_404(Order, id=order_id, user=request.user)
+                
+                # Increase the product stock
+                product = order.product
+                product.stock += order.quantity
+                product.save()
+                
+                # Delete the order
+                order.delete()
+                
+                messages.success(request, "Order has been successfully cancelled and stock has been restored.")
+                
+        except Exception as e:
+            messages.error(request, "An error occurred while cancelling the order.")
+            
     return redirect('Customer:orders')
+
+def submit_feedback(request, order_id):
+    if request.method == 'POST':
+        order = get_object_or_404(Order, id=order_id, user=request.user)
+        feedback_text = request.POST.get('feedback_text')
+        
+        if feedback_text:
+            Feedback.objects.create(
+                user=request.user,
+                order=order,
+                feedback_text=feedback_text
+            )
+            messages.success(request, 'Thank you for your feedback!')
+        else:
+            messages.error(request, 'Please provide feedback text.')
+            
+    return redirect('Customer:user_orders')
+
+def delete_feedback(request, feedback_id):
+    if request.method == 'POST':
+        feedback = get_object_or_404(Feedback, id=feedback_id)
+        if request.user == feedback.user or request.user.is_staff:
+            feedback.delete()
+            messages.success(request, 'Feedback deleted successfully.')
+        else:
+            messages.error(request, 'You do not have permission to delete this feedback.')
+    return redirect('Customer:user_orders')
