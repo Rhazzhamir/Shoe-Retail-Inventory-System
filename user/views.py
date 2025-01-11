@@ -80,20 +80,7 @@ def orders(request):
     user_orders = Order.objects.filter(user=request.user)
     return render(request, 'components/user_orders.html', {'orders': user_orders})
 
-# def checkout(request):
-#     if request.method == 'POST':
-#         selected_items = request.POST.getlist('selected_items')
-#         for item_id in selected_items:
-#             cart_item = Cart.objects.get(id=item_id)
-#             Order.objects.create(
-#                 user=request.user,
-#                 product=cart_item.product,
-#                 quantity=cart_item.quantity,
-#                 total_price=cart_item.product.price * cart_item.quantity
-#             )
-#             cart_item.delete()  
-#         return redirect('Customer:orders')  
-#     return redirect('Customer:shopping_cart')
+
 
 def checkout(request):
     if request.method == 'POST':

@@ -6,13 +6,13 @@
         </div>        
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <button class="nav-link text-light" id="help-tab" data-bs-toggle="tab" data-bs-target="#help" type="button" role="tab" aria-controls="help" aria-selected="false">
+                <!-- <button class="nav-link text-light" id="help-tab" data-bs-toggle="tab" data-bs-target="#help" type="button" role="tab" aria-controls="help" aria-selected="false">
                     Help
-                </button>
+                </button> -->
                 <button class="nav-link text-light me-3" id="user-feedback-tab" data-bs-toggle="tab" data-bs-target="#user-feedback" type="button" role="tab" aria-controls="user-feedback" aria-selected="true">
                     Customer Feedback
                 </button>
-                <button class="nav-link text-light me-3" id="stock-alert-tab" data-bs-toggle="tab" data-bs-target="#stock-alert" type="button" role="tab" aria-controls="stock-alert" aria-selected="true">
+                <button class="nav-link text-light me-3 active" id="stock-alert-tab" data-bs-toggle="tab" data-bs-target="#stock-alert" type="button" role="tab" aria-controls="stock-alert" aria-selected="true">
                     Stock alert
                 </button>
             </div>
@@ -25,7 +25,7 @@
             <div class="tab-pane fade show " id="user-feedback" role="tabpanel" aria-labelledby="user-feedback-tab" tabindex="0">
                 {% include 'components/customer_feedback.html' %}
             </div>
-            <div class="tab-pane fade show " id="stock-alert" role="tabpanel" aria-labelledby="stock-alert-tab" tabindex="0">
+            <div class="tab-pane fade show active " id="stock-alert" role="tabpanel" aria-labelledby="stock-alert-tab" tabindex="0">
                 {% include 'components/stock_alert.html' %}
             </div>
         </div>

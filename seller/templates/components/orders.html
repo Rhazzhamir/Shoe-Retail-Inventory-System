@@ -11,12 +11,14 @@
                 </div>
                 <div>
                     <button class="btn btn-success">
-                        Find shoes 
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="find_shoes bi bi-box-arrow-up-right" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"/>
-                            <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"/>
-                        </svg>
-                    </button>
+                        <a href="#category_page" class="sidebar-link  " data-toggle="tab" data-category="Categories">    
+                            Find shoes 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="find_shoes bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"/>
+                                <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"/>
+                            </svg>
+                        </button>
+                    </a>
                 </div>
             </div>
             <div class="container ">
@@ -31,9 +33,6 @@
             <div class="d-flex gap-3">
                 <div>
                     <button class="btn btn-light">Export</button>
-                </div>
-                <div>
-                    <button class="btn create_orders">Create orders</button>
                 </div>
             </div>
         </div>
@@ -57,23 +56,23 @@
                 <input type="text" id="calendar" style="display:none;">
 
                 <div class="col-6 col-md-2 border-end border-dark stat-item">
-                    <div class="stat-value"></div>
+                    <div class="stat-value">{{ total_orders }}</div>
                     <div class="stat-label">Total orders</div>
                 </div>
                 <div class="col-6 col-md-2 border-end border-dark stat-item">
-                    <div class="stat-value">493</div>
+                    <div class="stat-value">{{total_price}}</div>
                     <div class="stat-label">Ordered items over time</div>
                 </div>
                 <div class="col-6 col-md-2 border-end border-dark stat-item">
-                    <div class="stat-value">6</div>
+                    <div class="stat-value">0</div>
                     <div class="stat-label">Returns</div>
                 </div>
                 <div class="col-6 col-md-2 border-end border-dark stat-item">
-                    <div class="stat-value">359</div>
+                    <div class="stat-value">0</div>
                     <div class="stat-label">Fulfilled orders over time</div>
                 </div>
                 <div class="col-6 col-md-2 stat-item">
-                    <div class="stat-value">353</div>
+                    <div class="stat-value">0</div>
                     <div class="stat-label">Delivered orders over time</div>
                 </div>
             </div>
@@ -88,10 +87,8 @@
                         <th class="text-black" scope="col">Product</th>
                         <th class="text-black" scope="col">Quantity</th>
                         <th class="text-black" scope="col">Total Price</th>
-                        <th class="text-black" scope="col">Feedback</th>
-                        <th class="text-black" scope="col">Order Date</th>
                         <th class="text-black" scope="col">Order Status</th>
-                        <th class="text-black" scope="col">Status</th>
+                        <th class="text-black" scope="col">Order Date</th>
                         <th class="text-black" scope="col">Action</th>
                     </tr>
                 </thead>
@@ -100,15 +97,23 @@
                         <tr>
                             <th class="text-light" scope="row">{{ forloop.counter }}</th>
                             <td class="text-light">{{ order.user.username }}</td> <!-- Display customer username -->
-                            <td class="text-light">{{ order.product.name }}</td>
+                            <td class="text-light">{{ order.product.product_name}}</td>
                             <td class="text-light">{{ order.quantity }}</td>
-                            <td class="text-light">₱{{ order.total_price }}</td>
-                            <td class="text-light">{{ order.order_date|date:"Y-m-d H:i" }}</td>
+                            <td class="text-light">₱{{ order.total_price }}</td> 
                             <td class="text-light">{{ order.order_status }}</td>
+                            <td class="text-light">{{ order.order_date|date:"Y-m-d H:i" }}</td>
                             <td class="text-light d-flex gap-3">
                                 <div class="mt-2">|</div>
-                                <!-- Add any action buttons you need here -->
+                                <form action="{% url 'seller:delete_order' order.id %}" method="POST" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" 
+                                            class="btn btn-danger btn-sm" 
+                                            onclick="return confirm('Are you sure you want to cancel this order?');">
+                                        Cancel
+                                    </button>
+                                </form>
                             </td>
+
                         </tr>
                     {% empty %}
                         <tr>

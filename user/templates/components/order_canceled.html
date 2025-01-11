@@ -1,0 +1,34 @@
+{% load static %}
+<main class="orders_main content ">
+    <div class="container-fluid">
+        <div class="container mt-5">
+            <h2 class="text-danger">Your Order Has Been Canceled</h2>
+            <p class="text-dark">We're sorry to inform you that your order has been canceled. Below are the details of your canceled order:</p>
+            
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-dark">Product</th>
+                            <th class="text-dark">Quantity</th>
+                            <th class="text-dark">Total Price</th>
+                            <th class="text-dark">Order Date</th>
+                            <th class="text-dark">Order Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-light">{{ order.product.product_name }}</td>
+                            <td class="text-light">{{ order.quantity }}</td>
+                            <td class="text-light">₱{{ order.total_price }}</td>
+                            <td class="text-light">{{ order.order_date|date:"Y-m-d H:i" }}</td>
+                            <td class="text-light">{{ order.order_status }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <a href="{% url 'orders' %}" class="btn btn-primary mt-3">Go Back to Orders</a>
+        </div>
+    </div>
+</main>
