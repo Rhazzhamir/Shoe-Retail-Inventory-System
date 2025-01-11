@@ -1,3 +1,4 @@
+# user/views.py
 from django.shortcuts import render, redirect ,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from seller.models import Product
@@ -74,11 +75,11 @@ def cart(request):
     return render(request, 'shopping_cart.html', {'cart_items': cart_items})
 
 
+@login_required(login_url='accounts:login')
 def orders(request):
     user_orders = Order.objects.filter(user=request.user)
     return render(request, 'components/user_orders.html', {'orders': user_orders})
 
-@login_required(login_url='accounts:login')
 # def checkout(request):
 #     if request.method == 'POST':
 #         selected_items = request.POST.getlist('selected_items')
@@ -171,16 +172,18 @@ def submit_feedback(request, order_id):
         feedback_text = request.POST.get('feedback_text')
         
         if feedback_text:
-            Feedback.objects.create(
+            feedback = Feedback.objects.create(
                 user=request.user,
                 order=order,
                 feedback_text=feedback_text
             )
+            print(f"Feedback created: {feedback}")  # Debugging line
             messages.success(request, 'Thank you for your feedback!')
         else:
             messages.error(request, 'Please provide feedback text.')
             
-    return redirect('Customer:user_orders')
+    return redirect('Customer:orders')
+
 
 def delete_feedback(request, feedback_id):
     if request.method == 'POST':
@@ -191,3 +194,4 @@ def delete_feedback(request, feedback_id):
         else:
             messages.error(request, 'You do not have permission to delete this feedback.')
     return redirect('Customer:user_orders')
+

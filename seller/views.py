@@ -1,10 +1,16 @@
+# seller/views.py
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Category, Product , DeletedCategory , DeletedProduct
 from .form import CategoryForm , ProductForm  
-
+from user.models import Feedback
 from django.http import JsonResponse
+from .models import Product 
+from user.models import Order
+from django.db.models import Q
+from django.db.models import Prefetch
+from django.db.models import Count
 
 @login_required(login_url='accounts:login')
 def seller_dashboard_view(request):
@@ -32,6 +38,8 @@ def seller_dashboard_view(request):
     total_sum = categories.count()
     total_products = products.count()  # Count the total number of products
     total_stock = sum(product.stock for product in products)
+    out_of_stock = products.filter(stock=0).count()
+    low_stock = products.filter(stock=1).count()
 
     # Fetch deleted history
     deleted_categories = DeletedCategory.objects.all()
@@ -46,6 +54,8 @@ def seller_dashboard_view(request):
         'total_stock': total_stock,
         'deleted_categories': deleted_categories,
         'deleted_products': deleted_products,
+        'out_of_stock_count': out_of_stock,
+        'low_stock_count': low_stock,
     }
     return render(request, 'seller_dashboard.html', context)
 
@@ -166,4 +176,64 @@ def delete_deleted_product_view(request, product_id):
 def profile_view(request):
     return render(request , 'seller_profile.html')
 
+def orders_view(request):
+    orders = Order.objects.all()
+    # print(orders)  # Debugging line
+    return render(request, 'components/orders.html', {'orders': orders})
+    
 
+
+
+from user.models import Feedback, Order
+
+def customer_feedback(request):
+    # Get all feedback for products sold by this seller
+    feedback_list = Feedback.objects.filter(
+        order__product__seller=request.user
+    ).select_related(
+        'user', 
+        'order', 
+        'order__product'
+    ).order_by('-created_at')
+    
+    context = {
+        'feedback_list': feedback_list
+    }
+    return render(request, 'seller/components/customer_feedback.html', context)
+
+def delete_feedback(request, feedback_id):
+    if request.method == 'POST':
+        feedback = get_object_or_404(Feedback, id=feedback_id)
+        # Check if the feedback is for a product sold by this seller
+        if feedback.order.product.seller == request.user:
+            feedback.delete()
+            messages.success(request, 'Feedback deleted successfully.')
+        else:
+            messages.error(request, 'You do not have permission to delete this feedback.')
+    return redirect('seller:customer_feedback')
+
+# @login_required
+# def seller_feedback(request):
+#     # Get all feedback for products sold by the current seller
+#     feedback_list = Feedback.objects.filter(
+#         order__product__seller=request.user
+#     ).select_related(
+#         'user',
+#         'order',
+#         'order__product'
+#     ).order_by('-created_at')
+    
+#     # Print for debugging
+#     print(f"Number of feedback items found: {feedback_list.count()}")
+#     for feedback in feedback_list:
+#         print(f"Feedback ID: {feedback.id}, Text: {feedback.feedback_text}")
+    
+#     context = {
+#         'feedback_list': feedback_list,
+#         'total_feedback': feedback_list.count()
+#     }
+#     # In your view, add this debug print
+
+    
+#     # Make sure this path matches your actual template location
+#     return render(request, 'components/customer_feedback.html', context)
