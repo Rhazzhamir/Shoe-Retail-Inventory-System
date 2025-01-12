@@ -48,7 +48,8 @@ def seller_dashboard_view(request):
     orders = Order.objects.all()
     total_orders = orders.count()
 
-    total_price = orders.aggregate(total=Sum('price'))['total'] or 0
+    total_price = orders.aggregate(total=Sum('total_price'))['total'] or 0
+    total_pending_orders = orders.filter(order_status='pending').count()
     # Fetch deleted history
     deleted_categories = DeletedCategory.objects.all()
     deleted_products = DeletedProduct.objects.all()
@@ -67,7 +68,8 @@ def seller_dashboard_view(request):
         'orders': orders,
         'feedback_list': feedback_list , 
         'total_orders' : total_orders,
-        'total_price': total_price
+        'total_price': total_price,
+        'total_pending_orders': total_pending_orders
     }
     return render(request, 'seller_dashboard.html', context)
 

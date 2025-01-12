@@ -6,12 +6,12 @@
                 <div class="p-2">
                     <h2 class="text-dark noto-serif-ahom-regular">Discover and Manage Your Shoes</h2>
                     <small class="text-dark">
-                        Click the button below to access the dashboard and explore your inventory effortlessly.
+                        Click the button below to access the notification and explore your inventory effortlessly.
                     </small>
                 </div>
                 <div>
                     <button class="btn btn-success">
-                        <a href="#category_page" class="sidebar-link  " data-toggle="tab" data-category="Categories">    
+                        <a href="#notifications_page" class="sidebar-link" data-toggle="tab">
                             Find shoes 
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="find_shoes bi bi-box-arrow-up-right" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"/>
@@ -60,20 +60,20 @@
                     <div class="stat-label">Total orders</div>
                 </div>
                 <div class="col-6 col-md-2 border-end border-dark stat-item">
-                    <div class="stat-value">{{total_price}}</div>
-                    <div class="stat-label">Ordered items over time</div>
+                    <div class="stat-value">{{ total_price|floatformat:2 }}</div>
+                    <div class="stat-label">Total Price</div>
+                </div>
+                <div class="col-6 col-md-2 border-end border-dark stat-item">
+                    <div class="stat-value">{{total_pending_orders}}</div>
+                    <div class="stat-label">Total Pending</div>
                 </div>
                 <div class="col-6 col-md-2 border-end border-dark stat-item">
                     <div class="stat-value">0</div>
-                    <div class="stat-label">Returns</div>
-                </div>
-                <div class="col-6 col-md-2 border-end border-dark stat-item">
-                    <div class="stat-value">0</div>
-                    <div class="stat-label">Fulfilled orders over time</div>
+                    <div class="stat-label">Total Complete</div>
                 </div>
                 <div class="col-6 col-md-2 stat-item">
                     <div class="stat-value">0</div>
-                    <div class="stat-label">Delivered orders over time</div>
+                    <div class="stat-label">Delivered orders</div>
                 </div>
             </div>
         </div>
@@ -115,11 +115,22 @@
                             </td>
 
                         </tr>
+                        
                     {% empty %}
                         <tr>
                             <td colspan="8" class="text-danger text-center">No orders found.</td>
                         </tr>
                     {% endfor %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="text-light"><b>Total:</b> {{ total_price|floatformat:2 }}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
                 </tbody>
 
             </table>
