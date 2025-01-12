@@ -10,6 +10,13 @@ from .models import Product
 from user.models import Order
 from django.db.models import Sum
 
+# export
+from django.http import HttpResponse
+from openpyxl import Workbook
+from openpyxl.styles import Alignment
+from user.models import Order 
+
+
 @login_required(login_url='accounts:login')
 def seller_dashboard_view(request):
     category_id = request.POST.get('category_id')  # Get category ID from POST request
@@ -210,3 +217,56 @@ def delete_order(request, order_id):
         messages.error(request, 'You do not have permission to cancel this order!')
     
     return redirect('seller:seller_dashboard')
+
+
+
+def export_orders(request):
+    # Create a new workbook and active sheet
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Customer Orders"
+
+    # Define the header row
+    headers = ["#", "Id", "Product", "Quantity", "Total Price", "Order Status", "Order Date"]
+    ws.append(headers)
+
+    # Align the headers to the center
+    for col in ws.columns:
+        max_length = 0
+        column = col[0].column_letter  # Get the column name
+        for cell in col:
+            try:
+                if len(str(cell.value)) > max_length:
+                    max_length = len(cell.value)
+            except:
+                pass
+        adjusted_width = (max_length + 2)
+        ws.column_dimensions[column].width = adjusted_width
+        for cell in col:
+            cell.alignment = Alignment(horizontal="center")
+
+    # Populate the rows with order data
+    total_price = 0  # Initialize total price variable
+    for index, order in enumerate(Order.objects.all(), start=1):  # Add a row number with enumerate
+        total_price += order.total_price  # Add the total price of each order to the cumulative total
+        ws.append([
+            index,  # Add row number as #
+            order.user.username,  # Display customer username
+            order.product.product_name,
+            order.quantity,
+            order.total_price,
+            order.order_status,
+            order.order_date.strftime('%Y-%m-%d %H:%M')  # Format the date
+        ])
+
+    # Add the Total Price row at the bottom
+    ws.append(["", "", "", "", f"Total: ₱{total_price:.2f}", "", ""])
+
+    # Create a response object and return the Excel file
+    response = HttpResponse(
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+    response['Content-Disposition'] = 'attachment; filename=Customer_orders.xlsx'
+
+    wb.save(response)
+    return response

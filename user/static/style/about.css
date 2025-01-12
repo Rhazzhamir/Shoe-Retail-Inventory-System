@@ -16,7 +16,16 @@ body{
 }
 
 .user_manual{
-        background-color: rgb(182, 208, 236);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow for contrast */
-        backdrop-filter: blur(10px); 
-    }
+    background-color: rgb(182, 208, 236);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow for contrast */
+    backdrop-filter: blur(10px); 
+}
+
+.rocket-container , .login-container , .dashboard-container , .category-container , .product-container , .stock-container , .order-container , .notification-container{
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgb(2, 21, 42);
+    margin-bottom: 2rem;
+    padding: 2rem;
+}

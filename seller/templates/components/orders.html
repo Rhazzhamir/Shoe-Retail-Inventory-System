@@ -17,8 +17,8 @@
                                 <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"/>
                                 <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"/>
                             </svg>
+                        </a>
                         </button>
-                    </a>
                 </div>
             </div>
             <div class="container ">
@@ -30,11 +30,11 @@
             <div>
                 <h1 class="noto-serif-ahom-regular text-start">Orders</h1>
             </div>
-            <div class="d-flex gap-3">
-                <div>
-                    <button class="btn btn-light">Export</button>
-                </div>
-            </div>
+                <button  style="background-color: #a9d8b6; border-radius: 2px; padding: 3px;" >
+                    <a href="{% url 'seller:export_orders' %}"  style="color: black; ">
+                        Export Orders
+                    </a>
+                </button>
         </div>
 
         <div class="container my-5">
@@ -79,31 +79,38 @@
         </div>
 
         <div class="table_orders container">
-            <table class="table table-hover">
+            <table class="table  product-table table-hover">
                 <thead>
                     <tr class="header-orders">
                         <th class="text-black" scope="col">#</th>
-                        <th class="text-black" scope="col">Id</th>
-                        <th class="text-black" scope="col">Product</th>
+                        <th class="text-black" scope="col">Customer Name</th>
+                        <th class="text-black text-center" scope="col">Product</th>
                         <th class="text-black" scope="col">Quantity</th>
-                        <th class="text-black" scope="col">Total Price</th>
+                        <th class="text-black text-center" scope="col">Total Price</th>
                         <th class="text-black" scope="col">Order Status</th>
-                        <th class="text-black" scope="col">Order Date</th>
-                        <th class="text-black" scope="col">Action</th>
+                        <th class="text-black text-center" scope="col">Order Date</th>
+                        <th class="text-black text-center" scope="col">Feedback</th>
+                        <th class="text-black text-center" scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for order in orders %}
                         <tr>
                             <th class="text-light" scope="row">{{ forloop.counter }}</th>
-                            <td class="text-light">{{ order.user.username }}</td> <!-- Display customer username -->
+                            <td class="text-light text-center">{{ order.user.username }}</td> <!-- Display customer username -->
                             <td class="text-light">{{ order.product.product_name}}</td>
-                            <td class="text-light">{{ order.quantity }}</td>
-                            <td class="text-light">₱{{ order.total_price }}</td> 
-                            <td class="text-light">{{ order.order_status }}</td>
+                            <td class="text-light text-center">{{ order.quantity }}</td>
+                            <td class="text-light text-center">₱{{ order.total_price }}</td> 
+                            <td class="text-light text-center">{{ order.order_status }}</td>
                             <td class="text-light">{{ order.order_date|date:"Y-m-d H:i" }}</td>
+                            <td class="text-dark">
+                                {% if not order.feedback_set.exists %}
+                                    <span class="badge bg-warning text-dark">No feedback yet</span>
+                                {% else %}
+                                    <span class="badge bg-success">Feedback Submitted</span>
+                                {% endif %}
+                            </td>
                             <td class="text-light d-flex gap-3">
-                                <div class="mt-2">|</div>
                                 <form action="{% url 'seller:delete_order' order.id %}" method="POST" style="display:inline;">
                                     {% csrf_token %}
                                     <button type="submit" 
@@ -127,6 +134,7 @@
                             <td></td>
                             <td></td>
                             <td class="text-light"><b>Total:</b> {{ total_price|floatformat:2 }}</td>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>

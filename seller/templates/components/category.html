@@ -61,27 +61,27 @@
         <table class="stock-table table table-hover">
             <thead>
                 <tr>
-                    <th class="text-light" scope="col">Id</th>
-                    <th class="text-light" scope="col">Category</th>
-                    <th class="text-light" scope="col">Created At</th>
-                    <th class="text-light" scope="col">Updated At</th>
-                    <th class="text-light" scope="col">Action</th>
+                    <th class="text-light text-center" scope="col">Id</th>
+                    <th class="text-light text-center" scope="col">Category</th>
+                    <th class="text-light text-center" scope="col">Created At</th>
+                    <th class="text-light text-center" scope="col">Updated At</th>
+                    <th class="text-light text-center" scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
                 {% for category in categories %}
                 <tr>
-                    <th class="text-light" scope="row">{{ category.id }}</th>
-                    <td class="text-light">{{ category.category_name }}</td>
-                    <td class="text-light">{{ category.created_at }}</td>
-                    <td class="text-light">
+                    <th class="text-light text-center" scope="row">{{ category.id }}</th>
+                    <td class="text-light text-center">{{ category.category_name }}</td>
+                    <td class="text-light text-center">{{ category.created_at }}</td>
+                    <td class="text-light text-center">
                         {% if category.updated_at %}
                             {{ category.updated_at }}
                         {% else %}
                             N/A
                         {% endif %}
                     </td>
-                    <td class="text-light d-flex gap-3">
+                    <td class="text-light d-flex gap-3 ">
                         <!-- Edit -->
                         <button class="product_edit" data-bs-toggle="modal" data-bs-target="#updateCategoryModal" data-category-id="{{ category.id }}" data-category-name="{{ category.category_name }}">
                             <svg height="1em" viewBox="0 0 512 512">
