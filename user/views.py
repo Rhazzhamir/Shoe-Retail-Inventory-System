@@ -20,9 +20,9 @@ def dashboard(request):
     }
     return render(request , "user_dashboard.html" , context)
 
-@login_required(login_url='accounts:login')
-def shopping_cart(request):
-    return render(request , 'shopping_cart.html')
+# @login_required(login_url='accounts:login')
+# def shopping_cart(request):
+#     return render(request , 'shopping_cart.html')
 
 # @login_required(login_url='accounts:login')
 # def about(request):
@@ -32,17 +32,24 @@ def shopping_cart(request):
 def add_to_cart(request, product_id):
     product = Product.objects.get(id=product_id)
     customer = request.user
+    quantity = int(request.POST.get('quantity',1))
+    print(f"Product: {product}, Customer: {customer}, Quantity: {quantity}")  # Debugging line
+
     
     # Check if the product is already in the cart for this user
     cart_item, created = Cart.objects.get_or_create(
         product=product,
         customer=customer,
+        quantity=quantity
     )
     
     if not created:
-        # If the product already exists in the cart, just increment the quantity
-        cart_item.quantity += 1
-        cart_item.save()
+        if request.method == 'POST':
+            quantity = int(request.POST.get('quantity', 1))
+            print(f"Product: {product}, Customer: {customer}, Quantity: {quantity}")
+            # If the product already exists in the cart, just increment the quantity
+            cart_item.quantity += quantity
+            cart_item.save()
         messages.success(request, 'Item has been added to your cart.')
     
 
@@ -50,11 +57,21 @@ def add_to_cart(request, product_id):
 
 @login_required(login_url='accounts:login')
 def shopping_cart(request):
-    # Fetch cart items for the logged-in user
+
+
+    if request.method == 'POST':
+        cart_id = request.POST.get('cart_item_id')
+        quantity = int(request.POST.get('quantity', 1))
+        cart_item = Cart.objects.filter(pk=cart_id)
+        cart_item.update(quantity=quantity)
+
     customer = request.user
     cart_items = Cart.objects.filter(customer=customer)
 
     total_items = cart_items.count()
+
+
+
 
     return render(request, 'shopping_cart.html', {
         'cart_items': cart_items ,

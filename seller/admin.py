@@ -19,8 +19,11 @@ class OrderAdmin(admin.ModelAdmin):
 
 class FeedbackAdmin(admin.ModelAdmin):
     list_display = ('order' , 'feedback_text' , 'created_at')
+    def get_order(self, obj):
+        return obj.order.order_number  # Replace 'order_number' with the actual field you want to display
 
-
+    get_order.short_description = 'Order'
+    
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(DeletedCategory, DeletedCategoryAdmin)
