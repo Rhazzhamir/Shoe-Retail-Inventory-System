@@ -160,3 +160,6 @@ def seller_change_password(request):
             messages.error(request, 'Current password is incorrect.')
 
     return render(request, 'seller_profile.html', {'user': request.user})
+
+def home_page(request):
+    return render(request, 'home_page.html')

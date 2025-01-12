@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .hero-section {
+            height: 100vh;
+            background-color: #151f2c;
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+
+        .navbar {
+            background-color: #182433;
+            backdrop-filter: blur(10px);
+        }
+
+        .noto-serif-ahom-regular {
+            font-family: "Noto Serif Ahom", serif;
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        .left-side {
+            padding: 20px;
+        }
+
+        .right_side {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .wraper_skill {
+            position: relative;
+            padding: 40px;
+            height: auto;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+            border-radius: 10px;
+            background-color: transparent;
+        }
+
+        .scroller {
+            max-width: 100%;
+            overflow: hidden;
+        }
+        .scroller__inner {
+            display: flex;
+            gap: 1rem;
+            animation: scroll 20s linear infinite;
+        }
+
+        .scroller img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 0.5rem 1rem -0.25rem rgba(0, 0, 0, 0.5);
+            background-color: transparent;
+        }
+
+        /* Animation for scrolling */
+        @keyframes scroll {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-100%);
+            }
+        }
+        .scroller[data-animated="true"] {
+            overflow: hidden;
+            -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
+            mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
+        }
+
+        .scroller[data-animated="true"] .scroller__inner {
+            width: max-content;
+            flex-wrap: nowrap;
+            animation: scroll var(--_animation-duration, 40s) var(--_animation-direction, forwards) linear infinite;
+        }
+
+        .scroller[data-direction="right"] {
+            --_animation-direction: reverse;
+        }
+
+        .scroller[data-direction="left"] {
+            --_animation-direction: forwards;
+        }
+
+        .scroller[data-speed="fast"] {
+            --_animation-duration: 20s;
+        }
+
+        .scroller[data-speed="slow"] {
+            --_animation-duration: 60s;
+        }
+
+        @keyframes scroll {
+            to {
+                transform: translate(calc(-50% - 0.5rem));
+            }
+        }
+
+        :root {
+            --clr-neutral-100: hsl(0, 0%, 100%);
+            --clr-primary-100: hsl(205, 15%, 58%);
+            --clr-primary-400: hsl(215, 25%, 27%);
+            --clr-primary-800: hsl(217, 33%, 17%);
+            --clr-primary-900: hsl(218, 33%, 9%);
+        }
+
+        .tag-list {
+            margin: 0;
+            padding-inline: 0;
+            list-style: none;
+        }
+
+        .tag-list li {
+            padding: 1rem;
+            background: var(--clr-primary-400);
+            border-radius: 0.5rem;
+            box-shadow: 0 0.5rem 1rem -0.25rem var(--clr-primary-900);
+        }
+
+        .test {
+            background: red !important;
+        }
+        
+        .hero-section {
+            /* background: #f8f9fa; */
+            padding: 50px 0;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+        .section-content {
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .feature-item {
+            text-align: center;
+            padding: 20px;
+        }
+        .feature-icon {
+            font-size: 3rem;
+            color: #007bff;
+        }
+        .feature-title {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .section-image img {
+            width: 100%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <h5 class="noto-serif-ahom-regular text-light mt-2">STRIDENEST</h5>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home_about_page" data-toggle="tab">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:register' %}">Register</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="container">
+            <div class="row d-flex align-items-center">
+                <!-- Left Side -->
+                <div class="left-side col-lg-6 text-start">
+                    <h1 class="display-4 fw-bold mb-4">Welcome to Our <p class="noto-serif-ahom-regular">STRIDENEST</p> </h1>
+                    <p class="lead mb-4">Discover innovative solutions and unlock your potential with our team of experts.</p>
+                    <div class="d-grid gap-2 d-md-flex">
+                        <button class="btn btn-light btn-lg px-4 me-md-2">
+                            <a class="nav-link" href="{% url 'accounts:login' %}">
+                                Get Started
+                            </a>
+                        </button>
+                        <button class="btn btn-outline-light btn-lg px-4">
+                            <a class="nav-link" href="#home_about_page" data-toggle="tab">
+                                Learn More
+                            </a>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Side -->
+                {% load static %}
+                <div id="scroll" class="right_side col-lg-6 text-center">
+                    <div class="wraper_skill position-relative overflow-hidden">
+                        <div class="d-none d-lg-block scroller" data-speed="fast">
+                            <ul class="tag-list scroller__inner">
+                                <li><img src="{% static 'image/scroller/1.jpg' %}" alt=""></li>
+                                <li><img src="{% static 'image/scroller/2.jpg' %}" alt=""></li>
+                                <li><img src="{% static 'image/scroller/3.jpg' %}" alt=""></li>
+                                <li><img src="{% static 'image/scroller/4.jpg' %}" alt=""></li>
+                                <li><img src="{% static 'image/scroller/5.jpg' %}" alt=""></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="hero-section">
+        <div class="mt-5 container text-center my-5 full-height" id="home_about_page" style="background-color: #151f2c;">
+            <div class="mt-5">
+                <h1 class="text-center mb-5 text-light noto-serif-ahom-regular w-100 me-5 pt-5">Leadership</h1>
+            </div>
+            <!-- Top Picture Section -->
+            <div class=" row justify-content-center mb-4">
+                <div class="col-md-4">
+                    <div class="about_profile card border-0" style="background-color: rgba(255, 255, 255, 0.1);">
+                        <img src="{% static 'image/Members/Leader.jpg' %}" class="card-img-top rounded-circle mx-auto d-block w-50 h-50" alt="Top Leader">
+                        <div class="card-body">
+                            <h5 class="card-name text-light">RHAZZHAMIR I. AGUILAR</h5>
+
+                            <p class="card-text text-danger fw-bold">Leader</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Three Pictures at the Bottom -->
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <div class="about_profile card border-0" style="background-color: rgba(255, 255, 255, 0.1);">
+                        <img src="{% static 'image/Members/member1.jpg' %}" class="card-img-top rounded-circle mx-auto d-block w-50 h-50" alt="Leadership Member 1">
+                        <div class="card-body">
+                            <h6 class="card-name text-light">ARGIE REYES</h6>
+                            <p class="card-text text-danger fw-bold">Member</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="about_profile card border-0" style="background-color: rgba(255, 255, 255, 0.1);">
+                        <img src="{% static 'image/Members/member2.jpg' %}" class="card-img-top rounded-circle mx-auto d-block w-50 h-50" alt="Leadership Member 2">
+                        <div class="card-body">
+                            <h6 class="card-name text-light">ANGEL RAMOS</h6>
+                            <p class="card-text text-danger fw-bold">Member</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="about_profile card border-0" style="background-color: rgba(255, 255, 255, 0.1);">
+                        <img src="{% static 'image/Members/member3.jpg' %}" class="card-img-top rounded-circle mx-auto d-block w-50 h-50" alt="Leadership Member 3">
+                        <div class="card-body ">
+                            <h6 class="card-name text-light">KHANE JAVA</h6>
+                            <p class="card-text text-danger fw-bold">Member</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Mission Section -->
+    <section class="py-5" style="background-color: #151f2c; ">
+        <div class="container" >
+            <h2 class="section-title text-light">Our Mission</h2>
+            <p class="section-content text-light">
+                At STRIDENEST, our mission is simple: to empower every step. We provide high-quality footwear that supports your lifestyle, whether navigating a busy city street or enjoying a relaxed weekend getaway. We offer products that combine durability, comfort, and cutting-edge style, all at an affordable price.
+            </p>
+        </div>
+    </section>
+
+    <!-- Our Vision Section -->
+    <section class="py-5 " style="background-color: #151f2c; ">
+        <div class="container">
+            <h2 class="section-title text-light">Our Vision</h2>
+            <p class="section-content text-light">
+                We envision a world where comfort and style walk hand in hand. STRIDENEST continues to innovate and push the boundaries of footwear design, always ensuring that our customers have access to the latest trends and the most comfortable options available.
+            </p>
+        </div>
+    </section>
+
+    <!-- Why Choose STRIDENEST Section -->
+    <section class="py-5" style="background-color: #151f2c;">
+        <div class="container">
+            <h2 class="section-title text-light">Why Choose STRIDENEST?</h2>
+            <div class="row">
+                <div class="col-md-3 feature-item">
+                    <div class="feature-icon">
+                        <i class="bi bi-check-circle"></i>
+                    </div>
+                    <h4 class="feature-title text-light">Premium Quality</h4>
+                    <p class="text-light">Our footwear is crafted with care, using the finest materials to ensure durability and comfort.</p>
+                </div>
+                <div class="col-md-3 feature-item">
+                    <div class="feature-icon">
+                        <i class="bi bi-check-circle"></i>
+                    </div>
+                    <h4 class="feature-title text-light">Wide Selection</h4>
+                    <p class="text-light">From casual sneakers to elegant heels, STRIDENEST offers a diverse range of styles for every occasion.</p>
+                </div>
+                <div class="col-md-3 feature-item">
+                    <div class="feature-icon">
+                        <i class="bi bi-check-circle"></i>
+                    </div>
+                    <h4 class="feature-title text-light">Customer-Centric</h4>
+                    <p class="text-light">We value our customers and are committed to providing excellent service. Your satisfaction is our top priority.</p>
+                </div>
+                <div class="col-md-3 feature-item">
+                    <div class="feature-icon">
+                        <i class="bi bi-check-circle"></i>
+                    </div>
+                    <h4 class="feature-title text-light">Sustainable Practices</h4>
+                    <p class="text-light">We are committed to sustainability, ensuring that our products are produced with minimal environmental impact.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join Us Section -->
+    <section class="py-5 " style="background-color: #151f2c; ">
+        <div class="container text-center">
+            <h2 class="section-title text-light">Join Us on Our Journey</h2>
+            <p class="section-content text-light">
+                At STRIDENEST, we believe that every step you take matters. We’re here to make sure that each one is supported by shoes designed for ultimate comfort and style. Whether you're stepping into your next adventure or relaxing after a long day, STRIDENEST has the perfect pair for you.
+            </p>
+            <a href="{% url 'accounts:login'%}" class="btn btn-primary btn-lg text-light">Explore Our Collection</a>
+        </div>
+    </section>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const scrollers = document.querySelectorAll(".scroller");
+
+        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            addAnimation();
+        }
+
+        function addAnimation() {
+            scrollers.forEach((scroller) => {
+                scroller.setAttribute("data-animated", true);
+
+                const scrollerInner = scroller.querySelector(".scroller__inner");
+                const scrollerContent = Array.from(scrollerInner.children);
+
+                scrollerContent.forEach((item) => {
+                    const duplicatedItem = item.cloneNode(true);
+                    duplicatedItem.setAttribute("aria-hidden", true);
+                    scrollerInner.appendChild(duplicatedItem);
+                });
+            });
+        }
+
+        const home = document.querySelector("#Home");
+        window.addEventListener('scroll', () => {
+            scrollEffect();
+        });
+
+        function scrollEffect() {
+            home.style.opacity = 1 - window.scrollY / 900;
+            home.style.background = 160 - window.scrollY / 12 + '%';
+        }
+    </script>
+</body>
+</html>

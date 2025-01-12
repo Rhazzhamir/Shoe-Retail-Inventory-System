@@ -18,4 +18,5 @@ urlpatterns = [
     path('Seller-profile/' , views.seller_profile , name='Seller-Profile'),
     path('change-password/', views.seller_change_password, name='seller_change_password'),
 
+    path('home_page/' , views.home_page , name='home_page')
 ]

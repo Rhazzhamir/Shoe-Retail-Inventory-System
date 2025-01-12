@@ -56,10 +56,21 @@ Login Page
                 <div class="form-footer">
                     <button type="submit" class="btn btn-success w-100 btn">Submit</button>
                 </div>
+                <div class="text-center mt-3 text-muted" style="color: 182433;">
+                    <a class="text-decoration-none"  href="{% url 'accounts:register'%}">Register</a>
+                </div>
             </form>
-            <div class="text-center text-muted" style="color: 182433;">
-                <a class="text-decoration-none"  href="{% url 'accounts:register'%}">Register</a>
+            <div>
+                <a href="{% url 'accounts:home_page' %}" class="d-flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-bar-left mt-1 me-2" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"/>
+                    </svg>
+                    <p class="">
+                        Back to Homepage
+                    </p>
+                </a>
             </div>
+            
         </div>
     </div>
     

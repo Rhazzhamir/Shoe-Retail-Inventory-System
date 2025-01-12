@@ -19,9 +19,7 @@ class OrderAdmin(admin.ModelAdmin):
 
 class FeedbackAdmin(admin.ModelAdmin):
     list_display = ('order' , 'feedback_text' , 'created_at')
-    
-    def __str__(self):
-        return self.list_display.order
+
 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
