@@ -12,7 +12,7 @@ class DeletedProduct(models.Model):
     image = models.ImageField(upload_to='products/', null=True, blank=True)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    stock = models.IntegerField()
+    stock = models.IntegerField(default=0)
 
 class Category(models.Model):
     category_name = models.CharField(max_length=255)

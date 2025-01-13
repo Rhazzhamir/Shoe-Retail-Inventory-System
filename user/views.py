@@ -148,6 +148,7 @@ def checkout(request):
             
     return redirect('Customer:cart')
 
+@login_required(login_url='accounts:login')
 def cancel_order(request, order_id):
     if request.method == 'POST':
         try:
@@ -155,17 +156,28 @@ def cancel_order(request, order_id):
                 # Get the order and ensure it belongs to the current user
                 order = get_object_or_404(Order, id=order_id, user=request.user)
                 
+                # Get a fresh copy of the product from the database
+                product = Product.objects.select_for_update().get(id=order.product.id)
+                
+                # Store values for verification
+                old_stock = product.stock
+                restore_quantity = order.quantity
+                
                 # Increase the product stock
-                product = order.product
-                product.stock += order.quantity
+                product.stock += restore_quantity
                 product.save()
+                
+                # Log the change
+                print(f"Stock changed from {old_stock} to {product.stock} (+{restore_quantity})")
                 
                 # Delete the order
                 order.delete()
                 
-                messages.success(request, "Order has been successfully cancelled and stock has been restored.")
+                messages.success(request, 
+                    f"Order cancelled. Stock restored from {old_stock} to {product.stock}")
                 
         except Exception as e:
+            print(f"Error during cancellation: {str(e)}")
             messages.error(request, "An error occurred while cancelling the order.")
             
     return redirect('Customer:orders')
@@ -199,3 +211,33 @@ def delete_feedback(request, feedback_id):
             messages.error(request, 'You do not have permission to delete this feedback.')
     return redirect('Customer:user_orders')
 
+
+@login_required(login_url='accounts:login')
+def cancel_order(request, order_id):
+    if request.method == 'POST':
+        try:
+            with transaction.atomic():
+                # Get the order and ensure it belongs to the current user
+                order = get_object_or_404(Order, id=order_id, user=request.user)
+                
+                # Log initial stock value
+                print(f"Current stock before cancellation: {order.product.stock}")
+                
+                # Increase the product stock
+                product = order.product
+                product.stock += order.quantity
+                product.save()
+                
+                # Log final stock value
+                print(f"Updated stock after cancellation: {product.stock}")
+                
+                # Delete the order
+                order.delete()
+                
+                messages.success(request, "Order has been successfully cancelled and stock has been restored.")
+                
+        except Exception as e:
+            print(f"Error during cancellation: {str(e)}")  # Log the actual error
+            messages.error(request, "An error occurred while cancelling the order.")
+            
+    return redirect('Customer:orders')
