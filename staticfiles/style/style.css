@@ -239,7 +239,7 @@ h2 {
 .buy_now{
     font-weight: bold;
     border-radius: 20px;
-    background-color: #FAEBD7;
+    background-color: #23c483;
 }
 .discount{
     background-color: #70a2a4;
@@ -264,7 +264,7 @@ h2 {
 }
 
 .buy_now:hover {
-  background-color: #23c483;
+  background-color: rgb(136, 228, 187);
   box-shadow: 0px 15px 20px rgba(3, 93, 57, 0.4);
   color: #000000;
   transform: translateY(-7px);
@@ -330,3 +330,4 @@ body {
 .mt-5 {
     margin-top: 3rem !important;
 }
+

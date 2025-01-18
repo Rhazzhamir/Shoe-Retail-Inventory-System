@@ -1,0 +1,14 @@
+.cart_message {
+    position: fixed;
+    background-color: #a9d8b6; /* Light green background */
+    color: #333; /* Text color for contrast */
+    bottom: 10px;
+    left: 10px;
+    z-index: 9999;  /* Ensures the message is above other content */
+    padding: 15px;
+    font-size: 16px;
+    width: auto;
+    max-width: 300px;  /* Adjust this value if you want the message box to be wider */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+}
